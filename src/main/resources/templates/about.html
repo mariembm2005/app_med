@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>About - Shelfwise</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap.css}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main>
+
+    <section class="py-5"
+             style="background-color:#F1ECDD;">
+
+        <div class="container">
+
+            <h1 class="display-5 fw-bold">
+                About Shelfwise
+            </h1>
+
+            <p class="lead mt-3">
+                A social network created for people who love books.
+            </p>
+
+            <div class="row mt-5">
+
+                <div class="col-md-4">
+
+                    <h4>📚 Organize</h4>
+
+                    <p class="text-muted">
+                        Organize the books you have read,
+                        are reading, or want to read.
+                    </p>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <h4>💬 Connect</h4>
+
+                    <p class="text-muted">
+                        Share your opinions and discuss books
+                        with other readers.
+                    </p>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <h4>🔎 Discover</h4>
+
+                    <p class="text-muted">
+                        Find new books and discover
+                        readers with similar interests.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

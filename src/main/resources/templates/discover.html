@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Discover - Shelfwise</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap.css}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main>
+
+    <section class="py-5"
+             style="background-color:#F1ECDD;">
+
+        <div class="container">
+
+            <h1 class="display-5 fw-bold">
+                Discover
+            </h1>
+
+            <p class="lead text-muted">
+                Discover books and connect with other readers.
+            </p>
+
+            <hr class="my-4">
+
+            <div class="row">
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Popular Books
+                            </h5>
+
+                            <p class="card-text text-muted">
+                                Popular books will appear here.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Recommended
+                            </h5>
+
+                            <p class="card-text text-muted">
+                                Recommendations will appear here.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Readers
+                            </h5>
+
+                            <p class="card-text text-muted">
+                                Other readers will appear here.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

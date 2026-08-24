@@ -1,0 +1,289 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+### =========================
+### USER
+### =========================
+
+### Get all users
+GET http://localhost:8080/users
+
+### Get one user
+GET http://localhost:8080/users/mariemb005
+
+### Create user
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "username": "meary2005",
+  "email": "mea@example.com",
+  "password": "1234"
+}
+
+### Update user
+PUT http://localhost:8080/users/mimi4545
+Content-Type: application/json
+
+{
+  "username": "meark47",
+  "email": "newemail@example.com",
+  "password": "5678",
+  "confirmPassword": "5678",
+  "image": "meary.png"
+}
+
+### Delete user
+DELETE http://localhost:8080/users/mearo2005
+
+
+
+### =========================
+### WORK
+### =========================
+
+### Get all works
+GET http://localhost:8080/works
+
+### Get one work
+GET http://localhost:8080/works/11
+
+### Create work
+POST http://localhost:8080/works
+Content-Type: application/json
+
+{
+  "title": "The Hobbit",
+  "image": "hobbit.jpg",
+  "originalPubYear": 1937
+}
+
+### Update work
+PUT http://localhost:8080/works/14
+Content-Type: application/json
+
+{
+  "title": "The Hobbit Updated",
+  "image": "new-image.jpg",
+  "originalPubYear": 1937
+}
+
+### Delete work
+DELETE http://localhost:8080/works/11
+
+
+
+### =========================
+### AUTHOR
+### =========================
+
+### Get all authors
+GET http://localhost:8080/authors
+
+### Get one author
+GET http://localhost:8080/authors/6
+
+### Create author
+POST http://localhost:8080/authors
+Content-Type: application/json
+
+{
+  "name": "J.R.R. Tolkien"
+}
+
+### Update author
+PUT http://localhost:8080/authors/6
+Content-Type: application/json
+
+{
+  "name": "J. R. R. Tolkien"
+}
+
+### Delete author
+DELETE http://localhost:8080/authors/6
+
+
+
+### =========================
+### TAG
+### =========================
+
+### Get all tags
+GET http://localhost:8080/tags
+
+### Get one tag
+GET http://localhost:8080/tags/3
+
+### Create tag
+POST http://localhost:8080/tags
+Content-Type: application/json
+
+{
+  "name": "Thriller"
+}
+
+### Update tag
+PUT http://localhost:8080/tags/3
+Content-Type: application/json
+
+{
+  "name": "Fantasy Fiction"
+}
+
+### Delete tag
+DELETE http://localhost:8080/tags/3
+
+
+
+### =========================
+### COLLECTION
+### =========================
+
+### Get all collections
+GET http://localhost:8080/collections
+
+### Get one collection
+GET http://localhost:8080/collections/2
+
+### Create collection
+POST http://localhost:8080/collections
+Content-Type: application/json
+
+{
+  "name": "Read"
+}
+
+### Update collection
+PUT http://localhost:8080/collections/5
+Content-Type: application/json
+
+{
+  "name": "My Favorite Books"
+}
+
+### Delete collection
+DELETE http://localhost:8080/collections/5
+
+
+
+### =========================
+### REVIEW
+### =========================
+
+### Get all reviews
+GET http://localhost:8080/reviews
+
+### Get one review
+GET http://localhost:8080/reviews/1
+
+### Create review
+POST http://localhost:8080/reviews
+Content-Type: application/json
+
+{
+  "text": "Amazing book!",
+  "dateCreated": "2026-08-21",
+  "rating": 5
+}
+
+### Update review
+PUT http://localhost:8080/reviews/1
+Content-Type: application/json
+
+{
+  "text": "Really amazing book!",
+  "dateCreated": "2026-08-21",
+  "rating": 4
+}
+
+### Delete review
+DELETE http://localhost:8080/reviews/1
+
+
+
+### =========================
+### LIBRARY ENTRY
+### =========================
+
+### Get all library entries
+GET http://localhost:8080/library-entries
+
+### Get one library entry
+GET http://localhost:8080/library-entries/1
+
+### Create library entry
+POST http://localhost:8080/library-entries
+Content-Type: application/json
+
+{
+  "dateAdded": "2026-08-21",
+  "format": "PAPERBACK",
+  "title": "The Hobbit",
+  "description": "A fantasy novel",
+  "image": "hobbit.jpg",
+  "rating": 5
+}
+
+### Update library entry
+PUT http://localhost:8080/library-entries/1
+Content-Type: application/json
+
+{
+  "dateAdded": "2026-08-21",
+  "format": "EBOOK",
+  "title": "The Hobbit Updated",
+  "description": "Updated description",
+  "image": "new-image.jpg",
+  "rating": 4
+}
+
+### Delete library entry
+DELETE http://localhost:8080/library-entries/1
+
+
+
+### =========================
+### GROUP
+### =========================
+
+### Get all groups
+GET http://localhost:8080/groups
+
+### Get one group
+GET http://localhost:8080/groups/11
+
+### Create group
+POST http://localhost:8080/groups
+Content-Type: application/json
+
+{
+  "name": "Gr",
+  "description": "People who love fantasy books"
+}
+
+### Update group
+PUT http://localhost:8080/groups/12
+Content-Type: application/json
+
+{
+  "id": 12,
+  "name": "Fantasy Book Club",
+  "description": "Our fantasy book club"
+}
+
+### Delete group
+DELETE http://localhost:8080/groups/10
+
+
+### =========================
+### GROUP ↔ USER
+### =========================
+
+### Add user to group
+
+POST http://localhost:8080/groups/12/meark47
+###
+GET http://localhost:8080/groups
+
+

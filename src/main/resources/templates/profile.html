@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Profile - Shelfwise</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap.css}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main>
+
+    <section class="py-5"
+             style="background-color:#F1ECDD;">
+
+        <div class="container">
+
+            <div class="card">
+
+                <div class="card-body p-4">
+
+                    <div class="row align-items-center">
+
+                        <div class="col-md-2 text-center">
+
+                            <div class="rounded-circle
+                                        bg-secondary
+                                        text-white
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center"
+                                 style="width:100px;height:100px;
+                                        margin:auto;">
+
+                                👤
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-10">
+
+                            <h2>
+                                My Profile
+                            </h2>
+
+                            <p class="text-muted">
+                                Your profile information will appear here.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>
