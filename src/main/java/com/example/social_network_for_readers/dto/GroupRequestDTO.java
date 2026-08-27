@@ -4,6 +4,8 @@ package com.example.social_network_for_readers.dto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,4 +15,5 @@ public class GroupRequestDTO {
     @NotBlank(message = "name mustn't be empty")
     private String name;
     private String description;
+    private List<UserRequestDTO> members;
 }

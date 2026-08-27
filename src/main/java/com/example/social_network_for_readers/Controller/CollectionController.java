@@ -1,6 +1,9 @@
 package com.example.social_network_for_readers.Controller;
 
+import com.example.social_network_for_readers.dto.CollectionRequestDTO;
+import com.example.social_network_for_readers.dto.CollectionResponseDTO;
 import com.example.social_network_for_readers.entity.Collection;
+import com.example.social_network_for_readers.mapper.CollectionMapper;
 import com.example.social_network_for_readers.service.CollectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,28 +17,29 @@ import java.util.List;
 public class CollectionController {
 
     private final CollectionService collectionService;
+    private final CollectionMapper collectionMapper;
 
     @GetMapping
-    public List<Collection> getAllCollections() {
-        return collectionService.getAllCollections();
+    public List<CollectionResponseDTO> getAllCollections() {
+        return collectionMapper.toDTO(collectionService.getAllCollections());
     }
 
     @GetMapping("/{id}")
-    public Collection getCollection(@PathVariable int id) {
-        return collectionService.getCollection(id);
+    public CollectionResponseDTO getCollection(@PathVariable int id) {
+        return collectionMapper.toDTO(collectionService.getCollection(id));
     }
 
     @PostMapping
-    public Collection addCollection(@RequestBody Collection collection) {
-        return collectionService.addCollection(collection);
+    public CollectionResponseDTO addCollection(@RequestBody CollectionRequestDTO collection) {
+        return collectionMapper.toDTO(collectionService.addCollection(collectionMapper.toEntity(collection)));
     }
 
     @PutMapping("/{id}")
-    public Collection updateCollection(
+    public CollectionResponseDTO updateCollection(
             @PathVariable int id,
-            @RequestBody Collection collection) {
+            @RequestBody CollectionRequestDTO collection) {
 
-        return collectionService.updateCollection(id, collection);
+        return collectionMapper.toDTO(collectionService.updateCollection(id, collectionMapper.toEntity(collection)));
     }
 
     @DeleteMapping("/{id}")

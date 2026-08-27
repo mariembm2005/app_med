@@ -31,4 +31,6 @@ public class LibraryEntryRequestDTO {
     private List<CollectionRequestDTO> collectionRequestDTOList;
     private List<TagRequestDTO> tagRequestDTOList;
     private WorkRequestDTO workRequestDTO;
+    private UserRequestDTO userRequestDTO;
+    private String title;
 }

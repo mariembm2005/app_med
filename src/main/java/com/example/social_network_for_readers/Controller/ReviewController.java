@@ -1,6 +1,9 @@
 package com.example.social_network_for_readers.Controller;
 
+import com.example.social_network_for_readers.dto.ReviewRequestDTO;
+import com.example.social_network_for_readers.dto.ReviewResponseDTO;
 import com.example.social_network_for_readers.entity.Review;
+import com.example.social_network_for_readers.mapper.Reviewmapper;
 import com.example.social_network_for_readers.service.ReviewService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -15,28 +18,29 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final Reviewmapper reviewmapper;
 
     @GetMapping
-    public List<Review> getAllRevs() {
-        return reviewService.getAllReviews();
+    public List<ReviewResponseDTO> getAllRevs() {
+        return reviewmapper.toReviewResponseDTO(reviewService.getAllReviews());
     }
 
     @GetMapping("/{id}")
-    public Review getRev(@PathVariable Long id) {
-        return reviewService.getReview(id);
+    public ReviewResponseDTO getRev(@PathVariable Long id) {
+        return reviewmapper.toReviewResponseDTO(reviewService.getReview(id));
     }
 
     @PostMapping
-    public Review addRev(@RequestBody Review review) {
-        return reviewService.addReview(review);
+    public ReviewResponseDTO addRev(@RequestBody ReviewRequestDTO review) {
+        return reviewmapper.toReviewResponseDTO(reviewService.addReview(reviewmapper.toEntity(review)));
     }
 
     @PutMapping("/{id}")
-    public Review updateRev(
+    public ReviewResponseDTO updateRev(
             @PathVariable Long id,
-            @RequestBody Review review) {
+            @RequestBody ReviewRequestDTO review) {
 
-        return reviewService.updateReview(id, review);
+        return reviewmapper.toReviewResponseDTO(reviewService.updateReview(id, reviewmapper.toEntity(review)));
     }
 
     @DeleteMapping("/{id}")

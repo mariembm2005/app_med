@@ -2,24 +2,30 @@ package com.example.social_network_for_readers.service;
 
 import com.example.social_network_for_readers.entity.*;
 import com.example.social_network_for_readers.entity.Collection;
+import com.example.social_network_for_readers.mapper.Reviewmapper;
 import com.example.social_network_for_readers.mapper.UserMapper;
-import com.example.social_network_for_readers.repository.ReviewRepository;
-import com.example.social_network_for_readers.repository.UserRepository;
+import com.example.social_network_for_readers.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 //import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class UserService /*implements UserDetailsService*/ {
+    private final CollectionService collectionService;
+    private final CollectionRepository collectionRepository;
+    private final Reviewmapper reviewmapper;
     private UserRepository userRepository;
     private ReviewRepository reviewRepository;
+    private WorkRepository workRepository;
     private UserMapper userMapper;
+    private LibraryEntryRepository libraryEntryRepository;
 
 
 
@@ -30,8 +36,8 @@ public class UserService /*implements UserDetailsService*/ {
     }
 
     // GET - Get one user by name
-    public User getUserByName(String username) {
-       Optional<User> user = this.userRepository.findById(username);
+    public User getUserByID(Long id) {
+       Optional<User> user = this.userRepository.findById(id);
        return user.orElse(null);
 
     }
@@ -46,48 +52,28 @@ public class UserService /*implements UserDetailsService*/ {
 
     // PUT - Update a user
     @Transactional
-    public User updateUser(String name, User updatedUser) {
-        Optional<User> user = userRepository.findById(name);
+    public User updateUser(Long id, User updatedUser) {
 
-        if (user.isPresent()) {
-            User oldUser = user.get();
+        Optional<User> optionalUser = userRepository.findById(id);
 
-            // 1. CRITICAL: Break the relationships from the groups first
-            if (oldUser.getGroups() != null) {
-                for (Group group : oldUser.getGroups()) {
-                    group.getUsers().remove(oldUser);
-                }
-                oldUser.getGroups().clear();
-            }
-
-            // Flush this link removal to the DB right now so the delete works
-            userRepository.saveAndFlush(oldUser);
-
-            // 2. Now it is safe to delete the old entity
-            userRepository.delete(oldUser);
-
-            // 3. Create new entity with new ID
-            User newUser = new User();
-            newUser.setUsername(updatedUser.getUsername());
-            newUser.setEmail(updatedUser.getEmail());
-            newUser.setPassword(updatedUser.getPassword());
-            newUser.setImage(updatedUser.getImage());
-            newUser.setConfirmPassword(updatedUser.getConfirmPassword());
-
-            // Relink the original groups to the new user if needed
-            newUser.setGroups(updatedUser.getGroups());
-            newUser.setCollections(updatedUser.getCollections());
-            newUser.setReviews(updatedUser.getReviews());
-
-            return userRepository.saveAndFlush(newUser);
+        if (optionalUser.isEmpty()) {
+            return null;
         }
 
-        return null;
+        User user = optionalUser.get();
+
+        user.setUsername(updatedUser.getUsername());
+        user.setEmail(updatedUser.getEmail());
+        user.setPassword(updatedUser.getPassword());
+        user.setConfirmPassword(updatedUser.getConfirmPassword());
+        user.setImage(updatedUser.getImage());
+
+        return user;
     }
 
     // DELETE - Delete a user
-    public boolean deleteUser(String name) {
-        Optional<User> user = userRepository.findById(name);
+    public boolean deleteUser(Long id) {
+        Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             userRepository.delete(user.get());
             userRepository.flush();
@@ -108,18 +94,54 @@ public class UserService /*implements UserDetailsService*/ {
         return entry;
     }
 
-    public Review writeReview(Work work, String text,User user) {
-        Review review = new Review(work, text);
-        review.setUser(user);
-        user.getReviews().add(review);
-        reviewRepository.saveAndFlush(review);
-        return review;
+    public Review writeReview(Long wid, Review review,Long id) {
+        Optional<User> us= userRepository.findById(id);
+        if (us.isPresent()) {
+            User user = us.get();
+            review.setUser(user);
+            Work work = workRepository.findById(wid)
+                    .orElseThrow(() -> new RuntimeException("Work not found"));
+            review.setWork(work);
+            review.setDateCreated(LocalDate.now());
+            user.getReviews().add(review);
+            reviewRepository.saveAndFlush(review);
+            return review;
+        }
+        return null;
+
     }
 
-    public Collection createCollection(Long id, String name,User user) {
-        Collection collection = new Collection(id,name);
-        user.getCollections().add(collection);
-        return collection;
+    public Collection createCollection(Long id, Collection collection) {
+        Optional<User> us= userRepository.findById(id);
+        if (us.isPresent()) {
+            User user = us.get();
+            Collection col = new Collection();
+            col.setName(collection.getName());
+            col.setUser(user);
+            return collectionRepository.saveAndFlush(col);
+
+        }
+        return null;
+
+    }
+    public LibraryEntry addToCatalog(Long id,LibraryEntry l,Long wid){
+        Optional<User> us= userRepository.findById(id);
+        Work work = workRepository.findById(wid).orElse(null);
+        if (us.isPresent()) {
+            User user = us.get();
+            LibraryEntry le = new LibraryEntry();
+            le.setUser(us.get());
+            le.setDateAdded(LocalDate.now());
+            le.setFormat(l.getFormat());
+            le.setRating(l.getRating());
+            le.setImage(l.getImage());
+            le.setWork(work);
+            le.setUser(user);
+            le.setTitle(l.getTitle());
+            return libraryEntryRepository.saveAndFlush(le);
+
+        }
+        return null;
     }
 
     public void joinGroup(Group group,User user) {

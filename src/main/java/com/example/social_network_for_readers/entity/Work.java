@@ -1,6 +1,7 @@
 package com.example.social_network_for_readers.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class Work {
     private int originalPubYear;
     private String image;
     @OneToMany(mappedBy = "work", cascade = CascadeType.ALL)
+
 private List<Review> reviews;
     @ManyToMany
     @JoinTable(

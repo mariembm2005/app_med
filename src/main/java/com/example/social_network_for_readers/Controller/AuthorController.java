@@ -1,6 +1,9 @@
 package com.example.social_network_for_readers.Controller;
 
+import com.example.social_network_for_readers.dto.AuthorRequestDTO;
+import com.example.social_network_for_readers.dto.AuthorResponseDTO;
 import com.example.social_network_for_readers.entity.Author;
+import com.example.social_network_for_readers.mapper.AuthorMapper;
 import com.example.social_network_for_readers.service.AuthorService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,29 +16,30 @@ import java.util.*;
 public class AuthorController {
 
     private final AuthorService authorService;
+    private final AuthorMapper authorMapper;
 
 
     @GetMapping
-    public List<Author> getAllAuthors() {
-        return authorService.getAllAuthors();
+    public List<AuthorResponseDTO> getAllAuthors() {
+        return authorMapper.toDTO(authorService.getAllAuthors());
     }
 
     @GetMapping("/{id}")
-    public Author getAuthor(@PathVariable Long id) {
-        return authorService.getAuthorById(id);
+    public AuthorResponseDTO getAuthor(@PathVariable Long id) {
+        return authorMapper.toDTO(authorService.getAuthorById(id));
     }
 
     @PostMapping
-    public Author addAuthor(@RequestBody Author author) {
-        return authorService.addAuthor(author);
+    public AuthorResponseDTO addAuthor(@RequestBody AuthorRequestDTO author) {
+        return authorMapper.toDTO(authorService.addAuthor(authorMapper.toEntity(author)));
     }
 
     @PutMapping("/{id}")
-    public Author updateAuthor(
+    public AuthorResponseDTO updateAuthor(
             @PathVariable Long id,
-            @RequestBody Author author) {
+            @RequestBody AuthorRequestDTO author) {
 
-        return authorService.updateAuthor(id, author);
+        return authorMapper.toDTO(authorService.updateAuthor(id, authorMapper.toEntity(author)));
     }
 
     @DeleteMapping("/{id}")

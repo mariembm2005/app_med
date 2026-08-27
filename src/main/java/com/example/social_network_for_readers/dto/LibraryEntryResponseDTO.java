@@ -23,4 +23,6 @@ public class LibraryEntryResponseDTO {
     private List<CollectionResponseDTO> collectionResponseDTOList;
     private List<TagResponseDTO> tagResponseDTOList;
     private WorkResponseDTO workResponseDTOList;
+    private UserResponseDTO userResponseDTO;
+    private String title;
 }

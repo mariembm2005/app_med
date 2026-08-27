@@ -2,6 +2,7 @@ package com.example.social_network_for_readers.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,13 +20,14 @@ public class LibraryEntry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate dateAdded;
+    @Enumerated(EnumType.STRING)
     private Format format;
     private String title;
 
     private String image;
-    private int rating;
+    private float rating;
     @ManyToOne
-    @JoinColumn(name = "user_username")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Setter
@@ -43,6 +45,7 @@ public class LibraryEntry {
             joinColumns = @JoinColumn(name = "libraryEntry_id"),
             inverseJoinColumns = @JoinColumn(name = "collection_id")
     )
+    @JsonIgnore
     private Set<Collection> collections = new HashSet<>();
 
     public LibraryEntry(Work work, Format format) {

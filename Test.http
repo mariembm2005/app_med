@@ -10,32 +10,42 @@ GET https://examples.http-client.intellij.net/get
 GET http://localhost:8080/users
 
 ### Get one user
-GET http://localhost:8080/users/mariemb005
+GET http://localhost:8080/users/3
 
 ### Create user
 POST http://localhost:8080/users
 Content-Type: application/json
 
 {
-  "username": "meary2005",
-  "email": "mea@example.com",
-  "password": "1234"
+  "username": "mariem",
+  "email": "mear@example.com",
+  "password": "123456",
+  "confirmPassword": "123456",
+  "image": "mari.png",
+  "collectionRequestDTOList": [],
+  "groupRequestDTOList": [],
+  "libraryEntryRequestDTOList": [],
+  "reviewRequestDTOList": []
 }
 
 ### Update user
-PUT http://localhost:8080/users/mimi4545
+PUT http://localhost:8080/users/3
 Content-Type: application/json
 
 {
-  "username": "meark47",
+  "username": "newMariem",
   "email": "newemail@example.com",
-  "password": "5678",
-  "confirmPassword": "5678",
-  "image": "meary.png"
+  "password": "8888",
+  "confirmPassword": "8888",
+  "image": "meary5.png",
+  "collectionRequestDTOList": [],
+  "groupRequestDTOList": [],
+  "libraryEntryRequestDTOList": [],
+  "reviewRequestDTOList": []
 }
 
 ### Delete user
-DELETE http://localhost:8080/users/mearo2005
+DELETE http://localhost:8080/users/4
 
 
 
@@ -47,30 +57,32 @@ DELETE http://localhost:8080/users/mearo2005
 GET http://localhost:8080/works
 
 ### Get one work
-GET http://localhost:8080/works/11
+GET http://localhost:8080/works/2
 
 ### Create work
 POST http://localhost:8080/works
 Content-Type: application/json
 
 {
-  "title": "The Hobbit",
-  "image": "hobbit.jpg",
-  "originalPubYear": 1937
+  "title": "Steve Jobs",
+  "image": "steve.jpg",
+  "originalPubYear": 2012,
+  "authorRequestDTOList": []
 }
 
 ### Update work
-PUT http://localhost:8080/works/14
+PUT http://localhost:8080/works/2
 Content-Type: application/json
 
 {
-  "title": "The Hobbit Updated",
+  "title": "Steve Jobs Updated",
   "image": "new-image.jpg",
-  "originalPubYear": 1937
+  "originalPubYear": 2012,
+  "authorRequestDTOList": []
 }
 
 ### Delete work
-DELETE http://localhost:8080/works/11
+DELETE http://localhost:8080/works/1
 
 
 
@@ -82,26 +94,26 @@ DELETE http://localhost:8080/works/11
 GET http://localhost:8080/authors
 
 ### Get one author
-GET http://localhost:8080/authors/6
+GET http://localhost:8080/authors/2
 
 ### Create author
 POST http://localhost:8080/authors
 Content-Type: application/json
 
 {
-  "name": "J.R.R. Tolkien"
+  "name": "Walter Isacson"
 }
 
 ### Update author
-PUT http://localhost:8080/authors/6
+PUT http://localhost:8080/authors/2
 Content-Type: application/json
 
 {
-  "name": "J. R. R. Tolkien"
+  "name": "Walter Isacson"
 }
 
 ### Delete author
-DELETE http://localhost:8080/authors/6
+DELETE http://localhost:8080/authors/1
 
 
 
@@ -113,7 +125,7 @@ DELETE http://localhost:8080/authors/6
 GET http://localhost:8080/tags
 
 ### Get one tag
-GET http://localhost:8080/tags/3
+GET http://localhost:8080/tags/1
 
 ### Create tag
 POST http://localhost:8080/tags
@@ -124,11 +136,11 @@ Content-Type: application/json
 }
 
 ### Update tag
-PUT http://localhost:8080/tags/3
+PUT http://localhost:8080/tags/1
 Content-Type: application/json
 
 {
-  "name": "Fantasy Fiction"
+  "name": "Thriller updated"
 }
 
 ### Delete tag
@@ -249,25 +261,27 @@ DELETE http://localhost:8080/library-entries/1
 
 ### Get all groups
 GET http://localhost:8080/groups
+###
+GET http://localhost:8080/groups/2/members
 
 ### Get one group
-GET http://localhost:8080/groups/11
+GET http://localhost:8080/groups/2
 
 ### Create group
 POST http://localhost:8080/groups
 Content-Type: application/json
 
 {
-  "name": "Gr",
-  "description": "People who love fantasy books"
+  "name": "GrB",
+  "description": "People who love biography books"
 }
 
 ### Update group
-PUT http://localhost:8080/groups/12
+PUT http://localhost:8080/groups/1
 Content-Type: application/json
 
 {
-  "id": 12,
+  "id": 1,
   "name": "Fantasy Book Club",
   "description": "Our fantasy book club"
 }
@@ -280,10 +294,42 @@ DELETE http://localhost:8080/groups/10
 ### GROUP ↔ USER
 ### =========================
 
-### Add user to group
 
-POST http://localhost:8080/groups/12/meark47
 ###
 GET http://localhost:8080/groups
+
+### add user from specific group ✅
+POST http://localhost:8080/users/groups/2/user/3
+
+### add to collection ✅
+POST http://localhost:8080/users/2/collection
+Content-Type: application/json
+
+{
+  "name": "Read"
+}
+
+### add author from specific work ✅
+POST http://localhost:8080/works/2/2
+
+### write review ✅
+POST http://localhost:8080/users/2/work/2/reviews
+Content-Type: application/json
+
+{
+  "text": "it is such a great book",
+  "rating": 4.5
+}
+
+### add libraryEntry ✅ except col and tag
+POST http://localhost:8080/users/2/library-entry/work/2
+Content-Type: application/json
+
+{
+  "rating" : 4.2,
+  "format" : "HARDCOVER",
+  "image" : "lel.png",
+  "title" : "le1"
+}
 
 

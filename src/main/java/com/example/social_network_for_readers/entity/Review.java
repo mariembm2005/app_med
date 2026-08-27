@@ -27,10 +27,13 @@ public class Review {
     private Work work;
 
     @ManyToOne
-    @JoinColumn(name = "user_username")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Review(Work work, String text) {
+        this.work = work;
+        this.text = text;
+        this.dateCreated = LocalDate.now();
     }
 
 

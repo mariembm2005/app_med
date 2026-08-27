@@ -1,5 +1,6 @@
 package com.example.social_network_for_readers.service;
 
+import com.example.social_network_for_readers.dto.LibraryEntryRequestDTO;
 import com.example.social_network_for_readers.entity.Collection;
 import com.example.social_network_for_readers.entity.LibraryEntry;
 import com.example.social_network_for_readers.entity.Tag;
@@ -137,6 +138,8 @@ public class LibraryEntryService {
                 libraryEntryRepository.flush();
             }
         }
-    }
+
+
+}
 
 

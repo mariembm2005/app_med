@@ -12,4 +12,6 @@ public class ReviewResponseDTO {
     private String text;
     private LocalDate dateAdded;
     private float rating;
+    private UserResponseDTO user;
+    private WorkResponseDTO work;
 }

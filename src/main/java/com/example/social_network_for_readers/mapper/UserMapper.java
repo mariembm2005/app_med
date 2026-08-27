@@ -45,8 +45,12 @@ public class UserMapper {
         List<Collection> dtoList = userRequestDTO.getCollectionRequestDTOList().stream()
                 .map(col -> new Collection(col.getId(), col.getName()))
                 .collect(Collectors.toList());
-
         userEntitytmp.setCollections(dtoList);
+    }
+    public List<UserResponseDTO> toResponseDtoLis(List<User> users) {
+        return users.stream()
+                .map(this::toResponseDto)
+                .toList();
     }
 
 }

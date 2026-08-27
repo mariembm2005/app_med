@@ -6,11 +6,13 @@ import com.example.social_network_for_readers.dto.WorkResponseDTO;
 import com.example.social_network_for_readers.entity.Author;
 import com.example.social_network_for_readers.entity.Work;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
+@Component
 public class WorkMapper {
     public Work toEntity(WorkRequestDTO workRequestDTO) {
         Work work = new Work();
@@ -21,7 +23,7 @@ public class WorkMapper {
         List<Author> authors = workRequestDTO.getAuthorRequestDTOList()
                 .stream()
                 .map(author->new Author(author.getId(), author.getName()))
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
         work.setAuthors(authors);
         return work;
     }
@@ -37,5 +39,10 @@ public class WorkMapper {
                 .collect(Collectors.toList());
         workResponseDTO.setAuthorResponseDTOList(authors);
         return workResponseDTO;
+    }
+    public List<WorkResponseDTO> toDTO(List<Work> works) {
+        return works.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 }

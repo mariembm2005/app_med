@@ -1,6 +1,9 @@
 package com.example.social_network_for_readers.Controller;
 
+import com.example.social_network_for_readers.dto.LibraryEntryRequestDTO;
+import com.example.social_network_for_readers.dto.LibraryEntryResponseDTO;
 import com.example.social_network_for_readers.entity.LibraryEntry;
+import com.example.social_network_for_readers.mapper.LibraryEntryMapper;
 import com.example.social_network_for_readers.service.LibraryEntryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,35 +17,36 @@ import java.util.List;
 public class LibraryEntryController {
 
     private final LibraryEntryService libraryEntryService;
+    private final LibraryEntryMapper libraryEntryMapper;
 
     @GetMapping
-    public List<LibraryEntry> getAllLibraryEntries() {
-        return libraryEntryService.getAllLibraryEntries();
+    public List<LibraryEntryResponseDTO> getAllLibraryEntries() {
+        return libraryEntryMapper.toResponseEntity(libraryEntryService.getAllLibraryEntries());
     }
 
     @GetMapping("/{id}")
-    public LibraryEntry getLibraryEntry(
+    public LibraryEntryResponseDTO getLibraryEntry(
             @PathVariable Long id) {
 
-        return libraryEntryService.getLibraryEntry(id);
+        return libraryEntryMapper.toResponseEntity(libraryEntryService.getLibraryEntry(id));
     }
 
     @PostMapping
-    public LibraryEntry addLibraryEntry(
-            @RequestBody LibraryEntry libraryEntry) {
+    public LibraryEntryResponseDTO addLibraryEntry(
+            @RequestBody LibraryEntryRequestDTO libraryEntry) {
 
-        return libraryEntryService.addLibraryEntry(libraryEntry);
+        return libraryEntryMapper.toResponseEntity(libraryEntryService.addLibraryEntry(libraryEntryMapper.toEntity(libraryEntry)));
     }
 
     @PutMapping("/{id}")
-    public LibraryEntry updateLibraryEntry(
+    public LibraryEntryResponseDTO updateLibraryEntry(
             @PathVariable Long id,
-            @RequestBody LibraryEntry libraryEntry) {
+            @RequestBody LibraryEntryRequestDTO libraryEntry) {
 
-        return libraryEntryService.updateLibraryEntry(
+        return libraryEntryMapper.toResponseEntity(libraryEntryService.updateLibraryEntry(
                 id,
-                libraryEntry
-        );
+                libraryEntryMapper.toEntity(libraryEntry)
+        ));
     }
 
     @DeleteMapping("/{id}")

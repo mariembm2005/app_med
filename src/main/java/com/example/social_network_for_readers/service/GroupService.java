@@ -3,6 +3,8 @@ package com.example.social_network_for_readers.service;
 import com.example.social_network_for_readers.entity.Group;
 import com.example.social_network_for_readers.entity.User;
 import com.example.social_network_for_readers.repository.GroupRepository;
+import com.example.social_network_for_readers.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,9 +18,18 @@ import java.util.Set;
 @AllArgsConstructor
 public class GroupService {
     private final GroupRepository groupRepository;
-    public void addMember(User user, Group group){
+    private final UserRepository userRepository;
+    @Transactional
+    public void addMember(Long grpId, Long userId) {
+
+        Group group = groupRepository.findById(grpId)
+                .orElseThrow(() -> new RuntimeException("Group not found"));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         group.getUsers().add(user);
-        groupRepository.saveAndFlush(group);
+        groupRepository.save(group);
     }
     public void removeMember(User user, Group group){
         group.getUsers().remove(user);
@@ -30,9 +41,12 @@ public class GroupService {
     public List<Group> getAllGroups(){
         return groupRepository.findAll();
     }
-    public Set<User> getAllUsers(Group group){
-        Set<User> users = group.getUsers();
-            return users;
+    public List<User> getAllUsers(Long id){
+        Optional<Group> group = groupRepository.findById(id);
+        if(group.isPresent()){
+            return group.get().getUsers();
+        }
+            return null;
     }
     public Group getGroupById(Long id){
         Optional<Group> gr =  groupRepository.findById(id);
@@ -59,6 +73,10 @@ public class GroupService {
     }
     public Group addGroup(Group group){
         return groupRepository.saveAndFlush(group);
+    }
+
+    public List<User> getMembers(Long id){
+        return getGroupById(id).getUsers();
     }
 
 }

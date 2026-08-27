@@ -20,5 +20,7 @@ public class ReviewRequestDTO {
     private LocalDate dateAdded;
     @PositiveOrZero
     private float rating;
+    private UserRequestDTO user;
+    private WorkRequestDTO work;
 
 }

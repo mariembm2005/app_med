@@ -22,6 +22,9 @@ import java.util.Set;
 @NoArgsConstructor
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false, unique = true)
     private String username;
     private String email;
     private String password;
@@ -30,17 +33,20 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LibraryEntry> entries = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Collection> collections = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
     @ManyToMany(mappedBy = "users")
     @JsonIgnore
 
     private Set<Group> groups = new HashSet<>();
-    public User(String username, String email, String password, String image) {
+    public User(String username, String email, String password,String confirmPassword, String image) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.confirmPassword = confirmPassword;
         this.image = image;
     }
 
