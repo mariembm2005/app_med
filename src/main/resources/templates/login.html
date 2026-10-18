@@ -10,11 +10,13 @@
 
     <link rel="stylesheet"
           th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap.min.css}">
 </head>
 
 <body>
 
-<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/navbar_not_loged_in :: navbar}"></div>
 
 <main>
 
@@ -35,17 +37,16 @@
                                 Sign In
                             </h2>
 
-                            <form>
-
+                            <form th:action="@{/auth/login}" method="post">
                                 <div class="mb-3">
 
                                     <label class="form-label">
-                                        Email
+                                        Username or Email
                                     </label>
 
-                                    <input type="email"
+                                    <input type="text"
                                            class="form-control"
-                                           name="email">
+                                           name="username">
 
                                 </div>
 
@@ -61,13 +62,10 @@
 
                                 </div>
 
-                                <button type="submit"
-                                        class="btn btn-success w-100">
-                                    Sign In
-                                </button>
 
+                                <input type="submit" th:value="'Sign in'" class="btn btn-success w-100">
+                                <p th:if="${error}" th:text="${error}" style="color:red;"></p>
                             </form>
-
                             <p class="text-center mt-3 mb-0">
 
                                 Don't have an account?

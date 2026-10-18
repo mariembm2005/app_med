@@ -19,7 +19,8 @@
 <body>
 
 <!-- NAVBAR -->
-<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/navbar_loged_in :: navbar}" th:if="${loggedIn==true}"></div>
+<div th:replace="~{fragments/navbar_not_loged_in :: navbar}" th:if="${loggedIn==false}"></div>
 
 
 <!-- HERO -->
