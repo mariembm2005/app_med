@@ -21,12 +21,11 @@ Content-Type: application/json
 {
   "nom": "Ben Foulen",
   "prenom" : "Foulen",
-  "email": "foulenmpatientn003@example.com",
+  "email": "foulenmpatientmedecin0011@example.com",
   "motDePasse": "000000000",
   "confirmMotDePasse": "000000000",
   "image": "mari.png",
-  "age": 21,
-  "telephone": "14141414"
+  "role": "MEDECIN"
 }
 ###
 POST http://localhost:8080/auth/login

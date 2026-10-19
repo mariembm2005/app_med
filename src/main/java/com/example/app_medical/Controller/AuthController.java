@@ -1,11 +1,13 @@
 package com.example.app_medical.Controller;
 
 import com.example.app_medical.dto.UserRequestDTO;
+import com.example.app_medical.dto.UserResponseDTO;
 import com.example.app_medical.entity.*;
 import com.example.app_medical.mapper.UserMapper;
 import com.example.app_medical.service.UserService;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
     private final UserService userService;
@@ -44,10 +47,18 @@ public class AuthController {
         user.setEmail(utilisateur.getEmail());
         user.setImage(utilisateur.getImage());
         user.setRole(utilisateur.getRole());
-        userService.createUser(user);
+        Utilisateur saved = userService.createUser(user);
 
-        return ResponseEntity.ok("Signup successful");
-    }
+        UserResponseDTO response = new UserResponseDTO(
+                saved.getNom(),
+                saved.getPrenom(),
+                saved.getEmail(),
+                saved.getImage(),
+                saved.getRole()
+
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);    }
 
 
     @PostMapping("/login")
