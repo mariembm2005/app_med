@@ -68,14 +68,21 @@ public class AuthController {
                 userService.getUserByEmail(utilisateur.getEmail());
 
         if (existingUser == null ||
-                !passwordEncoder.matches(
-                        utilisateur.getMotDePasse(),
-                        existingUser.getMotDePasse())) {
+
+                !passwordEncoder.matches(utilisateur.getMotDePasse(), existingUser.getMotDePasse())) {
 
             return ResponseEntity.status(401)
                     .body("Invalid email or password");
         }
 
-        return ResponseEntity.ok("Login successful");
+        UserResponseDTO response = new UserResponseDTO();
+        response.setNom(existingUser.getNom());
+        response.setPrenom(existingUser.getPrenom());
+        response.setEmail(existingUser.getEmail());
+        response.setImage(existingUser.getImage());
+        response.setRole(existingUser.getRole());
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

@@ -21,19 +21,19 @@ Content-Type: application/json
 {
   "nom": "Ben Foulen",
   "prenom" : "Foulen",
-  "email": "foulenmpatientmedecin0011@example.com",
+  "email": "mariem005@example.com",
   "motDePasse": "000000000",
   "confirmMotDePasse": "000000000",
   "image": "mari.png",
-  "role": "MEDECIN"
+  "role": "PATIENT"
 }
 ###
 POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "email": "foulenmpatientn@example.com",
-  "motDePasse": "123456"
+  "email": "mariem005@example.com",
+  "motDePasse": "000000000"
 }
 
 ### Update user
