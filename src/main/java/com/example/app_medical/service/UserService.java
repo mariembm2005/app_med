@@ -1,6 +1,11 @@
 package com.example.app_medical.service;
-
+import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.app_medical.dto.*;
 import com.example.app_medical.entity.*;
+import com.example.app_medical.mapper.*;
 import com.example.app_medical.repository.*;
 import jakarta.transaction.Transactional;
 //import org.springframework.security.core.userdetails.*;
@@ -12,13 +17,19 @@ import java.util.Optional;
 
 @Service
 @Getter
+@AllArgsConstructor
 public class UserService{
 
 
 private UserRepository userRepository;
-public UserService(UserRepository userRepository){
-    this.userRepository=userRepository;
-}
+private PatientMapper patientMapper;
+private PatientRepository patientRepository;
+private MedecinMapper medecinMapper;
+private SpecialiteRepository specialiteRepository;
+private MedecinRepository medecinRepository;
+private PasswordEncoder  passwordEncoder = new BCryptPasswordEncoder();
+
+
 
 
 
@@ -78,7 +89,35 @@ public UserService(UserRepository userRepository){
     public Utilisateur createUser(Utilisateur user){
         return this.userRepository.saveAndFlush(user);
     }
+    public Patient createPatient(PatientRequestDTO dto) {
+        Patient patient = patientMapper.toEntity(dto);
+        patient.setMotDePasse(passwordEncoder.encode(dto.getMotDePasse()));
+        patient.setRole(RoleEnum.PATIENT);
+        return patientRepository.save(patient);
+    }
 
+    public Medecin createMedecin(MedecinRequestDTO dto) {
+
+        Medecin medecin = medecinMapper.toEntity(dto);
+
+        medecin.setMotDePasse(
+                passwordEncoder.encode(dto.getMotDePasse())
+        );
+
+        medecin.setRole(RoleEnum.MEDECIN);
+
+        Specialite specialite = specialiteRepository
+                .findById(dto.getSpecialiteId())
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Spécialité introuvable : " + dto.getSpecialiteId()
+                        )
+                );
+
+        medecin.setSpecialite(specialite);
+
+        return medecinRepository.save(medecin);
+    }
 
 
 

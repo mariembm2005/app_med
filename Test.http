@@ -32,8 +32,8 @@ POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "email": "mariem005@example.com",
-  "motDePasse": "000000000"
+  "email": "sami@mail.com",
+  "motDePasse": "123456"
 }
 
 ### Update user
@@ -58,6 +58,36 @@ GET http://localhost:8080/api/hello
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZWFyMjAwNSIsImlhdCI6MTc4ODM1MDE1NCwiZXhwIjoxNzg4MzUxMDU0fQ.Qd1nOXToCuDs7GJAhz7HzzGQJ6oPs619m7LfXybqDZs
 
 ###
+
+
+POST http://localhost:8080/auth/signup/patient
+Content-Type: application/json
+
+{
+  "nom": "Ben Ali",
+  "prenom": "Sami",
+  "email": "sami@mail.com",
+  "motDePasse": "123456",
+  "confirmMotDePasse": "123456",
+  "image": null,
+  "age": 25,
+  "telephone": "20123456"
+}
+
+###
+POST http://localhost:8080/auth/signup/medecin
+Content-Type: application/json
+
+{
+"nom": "Trabelsi",
+"prenom": "Leila",
+"email": "leila@mail.com",
+"motDePasse": "123456",
+"confirmMotDePasse": "123456",
+"image": null,
+"numeroOrdre": "TN-4521",
+"specialiteId": 1
+}
 
 
 

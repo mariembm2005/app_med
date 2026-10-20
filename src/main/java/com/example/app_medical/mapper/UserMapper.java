@@ -45,7 +45,7 @@ public class UserMapper {
     }
 
 
-    private void updateEntity(Utilisateur userEntitytmp, UserRequestDTO userRequestDTO) {
+    void updateEntity(Utilisateur userEntitytmp, UserRequestDTO userRequestDTO) {
         userEntitytmp.setEmail(userRequestDTO.getEmail());
         userEntitytmp.setMotDePasse(userRequestDTO.getMotDePasse());
         userEntitytmp.setNom(userRequestDTO.getNom());
@@ -60,6 +60,14 @@ public class UserMapper {
         return users.stream()
                 .map(this::toResponseDto)
                 .toList();
+    }
+
+    protected void fillResponse(UserResponseDTO dto, Utilisateur user) {
+        dto.setNom(user.getNom());
+        dto.setPrenom(user.getPrenom());
+        dto.setEmail(user.getEmail());
+        dto.setImage(user.getImage());
+        dto.setRole(user.getRole());
     }
 
 }
