@@ -1,6 +1,7 @@
 package com.example.app_medical.dto;
 
 
+import com.example.app_medical.entity.Specialite;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class MedecinRequestDTO extends UserRequestDTO {
     @NotBlank(message = "Numero d'ordre requis")
     private String numeroOrdre;
 
-    @NotNull(message = "Specialite requise")
-    private Long specialiteId;
+    private Specialite specialite;
+
+    private boolean isApproved;
 }

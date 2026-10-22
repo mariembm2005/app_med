@@ -11,7 +11,7 @@ GET http://localhost:8080/users
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZvdWxlbm1wYXRpZW50bkBleGFtcGxlLmNvbSIsIm1vdERlUGFzc2UiOiIxMjM0NTYifQ.G8JEORUxrlnJ2nt2cVYreHkh2TuXXB8DaUildFa5t1U
 
 ### Get one user
-GET http://localhost:8080/users/1
+GET http://localhost:8080/users/26
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZvdWxlbm1wYXRpZW50bkBleGFtcGxlLmNvbSIsIm1vdERlUGFzc2UiOiIxMjM0NTYifQ.G8JEORUxrlnJ2nt2cVYreHkh2TuXXB8DaUildFa5t1U
 
 ### Create user
@@ -21,19 +21,19 @@ Content-Type: application/json
 {
   "nom": "Ben Foulen",
   "prenom" : "Foulen",
-  "email": "mariem005@example.com",
+  "email": "mariem0055@example.com",
   "motDePasse": "000000000",
   "confirmMotDePasse": "000000000",
   "image": "mari.png",
-  "role": "PATIENT"
+  "role": "ADMIN"
 }
 ###
 POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "email": "sami@mail.com",
-  "motDePasse": "123456"
+  "email": "foulenmpatientnadmin0011@example.com",
+  "motDePasse": "000000000"
 }
 
 ### Update user
@@ -59,14 +59,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZWFyMjAwNSIsImlhdCI6MTc4O
 
 ###
 
+GET http://localhost:8080/api/medecins/not-approved
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmb3VsZW5tcGF0aWVudG5hZG1pbjAwMTFAZXhhbXBsZS5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3OTI2ODg1NjIsImV4cCI6MTc5MjY5MDM2Mn0.h0RmFZ1ChHuLoOb2cHd4qbyQG_GnT66S1Hmolr7BqrY
 
+
+###
 POST http://localhost:8080/auth/signup/patient
 Content-Type: application/json
 
 {
   "nom": "Ben Ali",
   "prenom": "Sami",
-  "email": "sami@mail.com",
+  "email": "sami44@mail.com",
   "motDePasse": "123456",
   "confirmMotDePasse": "123456",
   "image": null,
@@ -80,14 +84,24 @@ Content-Type: application/json
 
 {
 "nom": "Trabelsi",
-"prenom": "Leila",
-"email": "leila@mail.com",
+"prenom": "Mouna",
+"email": "mouna@mail.com",
 "motDePasse": "123456",
 "confirmMotDePasse": "123456",
 "image": null,
-"numeroOrdre": "TN-4521",
+"numeroOrdre": "TN-4522",
 "specialiteId": 1
 }
+
+
+###
+POST http://localhost:8080/auth/logout
+
+{% client.global.set("token", response.body.token); %}
+
+### 2. Call the protected endpoint with the token
+GET http://localhost:8080/api/specialites
+
 
 
 

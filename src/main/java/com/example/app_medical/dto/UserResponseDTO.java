@@ -7,6 +7,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponseDTO {
+    private Long id;
+    private String token;
+
+    public String getToken() { return token; }
+    public void setToken(String token) { this.token = token; }
     private String nom;
     private String prenom;
     private String email;

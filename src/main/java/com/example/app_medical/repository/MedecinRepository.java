@@ -11,4 +11,5 @@ public interface MedecinRepository extends JpaRepository<Medecin, Long> {
     boolean existsByEmail(String email);
     boolean existsByNumeroOrdre(String numeroOrdre);
     List<Medecin> findBySpecialiteId(Long specialiteId);
+    List<Medecin>findByApproved(boolean approved);
 }

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequestDTO {
-
+    private Long id;
     @NotBlank(message = "Nom requi")
     private String nom;
     @NotBlank(message = "Prenom requi")

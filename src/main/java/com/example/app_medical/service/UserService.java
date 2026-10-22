@@ -106,15 +106,9 @@ private PasswordEncoder  passwordEncoder = new BCryptPasswordEncoder();
 
         medecin.setRole(RoleEnum.MEDECIN);
 
-        Specialite specialite = specialiteRepository
-                .findById(dto.getSpecialiteId())
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Spécialité introuvable : " + dto.getSpecialiteId()
-                        )
-                );
 
-        medecin.setSpecialite(specialite);
+
+        medecin.setSpecialite(dto.getSpecialite());
 
         return medecinRepository.save(medecin);
     }

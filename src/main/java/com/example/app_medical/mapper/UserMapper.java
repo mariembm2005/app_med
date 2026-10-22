@@ -36,6 +36,7 @@ public class UserMapper {
 
     public UserResponseDTO toResponseDto(Utilisateur userEntity) {
         UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setId(userEntity.getId());
         userResponseDTO.setNom(userEntity.getNom());
         userResponseDTO.setPrenom(userEntity.getPrenom());
         userResponseDTO.setEmail(userEntity.getEmail());
@@ -46,6 +47,7 @@ public class UserMapper {
 
 
     void updateEntity(Utilisateur userEntitytmp, UserRequestDTO userRequestDTO) {
+        userEntitytmp.setId(userRequestDTO.getId());
         userEntitytmp.setEmail(userRequestDTO.getEmail());
         userEntitytmp.setMotDePasse(userRequestDTO.getMotDePasse());
         userEntitytmp.setNom(userRequestDTO.getNom());
@@ -63,6 +65,7 @@ public class UserMapper {
     }
 
     protected void fillResponse(UserResponseDTO dto, Utilisateur user) {
+        dto.setId(user.getId());
         dto.setNom(user.getNom());
         dto.setPrenom(user.getPrenom());
         dto.setEmail(user.getEmail());

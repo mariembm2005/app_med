@@ -1,5 +1,6 @@
 package com.example.app_medical.Controller;
 
+import com.example.app_medical.Security.JwtUtil;
 import com.example.app_medical.dto.*;
 import com.example.app_medical.entity.*;
 import com.example.app_medical.mapper.*;
@@ -13,11 +14,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@AllArgsConstructor
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
+
+    private final JwtUtil jwtUtil;
+
+    public AuthController(UserService userService,
+                          PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+    }
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
@@ -49,28 +58,33 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserRequestDTO utilisateur) {
+    public ResponseEntity<?> login(@RequestBody UserRequestDTO request) {
 
-        Utilisateur existingUser =
-                userService.getUserByEmail(utilisateur.getEmail());
+        Utilisateur user = userService.getUserByEmail(request.getEmail());
 
-        if (existingUser == null ||
+        if (user == null
+                || !passwordEncoder.matches(request.getMotDePasse(), user.getMotDePasse())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "E-mail ou mot de passe incorrect."));
+        }
 
-                !passwordEncoder.matches(utilisateur.getMotDePasse(), existingUser.getMotDePasse())) {
-
-            return ResponseEntity.status(401)
-                    .body("Invalid email or password");
+        if (user instanceof Medecin medecin && !medecin.isApproved()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", "Votre compte n'a pas encore été approuvé."));
         }
 
         UserResponseDTO response = new UserResponseDTO();
-        response.setNom(existingUser.getNom());
-        response.setPrenom(existingUser.getPrenom());
-        response.setEmail(existingUser.getEmail());
-        response.setImage(existingUser.getImage());
-        response.setRole(existingUser.getRole());
+        response.setId(user.getId());
+        response.setNom(user.getNom());
+        response.setPrenom(user.getPrenom());
+        response.setEmail(user.getEmail());
+        response.setImage(user.getImage());
+        response.setRole(user.getRole());
+        response.setToken(jwtUtil.generateToken(user.getEmail(), user.getRole().toString()));
+        System.out.println(jwtUtil.generateToken(user.getEmail(), user.getRole().toString()));// new
 
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.ok(response);
     }
 
     private ResponseEntity<?> checkSignup(UserRequestDTO dto) {
@@ -82,6 +96,7 @@ public class AuthController {
             return ResponseEntity.badRequest()
                     .body(Map.of("message", "Passwords do not match"));
         }
+
         return null;
     }
 }
