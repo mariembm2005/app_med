@@ -76,14 +76,13 @@ public class MedecinService {
 
     private MedecinResponseDTO toResponse(Medecin m) {
         MedecinResponseDTO dto = new MedecinResponseDTO();
+        dto.setId(m.getId());
         dto.setNom(m.getNom());
         dto.setPrenom(m.getPrenom());
-        Specialite s = specialiteRepository.findById(m.getSpecialite().getId()) .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Spécialité introuvable : " +m.getSpecialite().getId()));
-        dto.setSpecialite(s);
         dto.setEmail(m.getEmail());
         dto.setApproved(m.isApproved());
+        dto.setNumeroOrdre(m.getNumeroOrdre());
+        dto.setSpecialite(m.getSpecialite());
         return dto;
     }
 
@@ -94,15 +93,7 @@ public class MedecinService {
 
     private MedecinResponseDTO approve(Medecin m) {
         m.setApproved(true);
-
         Medecin saved = medecinRepository.save(m);
-
-        MedecinResponseDTO dto = new MedecinResponseDTO();
-        dto.setNom(saved.getNom());
-        dto.setPrenom(saved.getPrenom());
-        dto.setEmail(saved.getEmail());
-        dto.setApproved(saved.isApproved());
-
-        return dto;
+        return toResponse(saved);
     }
 }

@@ -22,10 +22,11 @@ public class AuthController {
     private final JwtUtil jwtUtil;
 
     public AuthController(UserService userService,
-                          PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+                          PasswordEncoder passwordEncoder, JwtUtil jwtUtil, UserMapper userMapper) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
+        this.userMapper = userMapper;
     }
 
     private final UserService userService;
