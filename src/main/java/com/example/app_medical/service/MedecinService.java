@@ -4,6 +4,7 @@ import com.example.app_medical.dto.MedecinRequestDTO;
 import com.example.app_medical.dto.MedecinResponseDTO;
 import com.example.app_medical.entity.Medecin;
 import com.example.app_medical.entity.Specialite;
+import com.example.app_medical.mapper.MedecinMapper;
 import com.example.app_medical.repository.MedecinRepository;
 import com.example.app_medical.repository.SpecialiteRepository;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,13 @@ public class MedecinService {
 
     private final MedecinRepository medecinRepository;
     private final SpecialiteRepository specialiteRepository;
+    private final MedecinMapper medecinMapper;
 
     public MedecinService(MedecinRepository medecinRepository,
-                          SpecialiteRepository specialiteRepository) {
+                          SpecialiteRepository specialiteRepository, MedecinMapper medecinMapper) {
         this.medecinRepository = medecinRepository;
         this.specialiteRepository = specialiteRepository;
+        this.medecinMapper = medecinMapper;
     }
 
     public List<MedecinResponseDTO> getAll() {
@@ -75,16 +78,9 @@ public class MedecinService {
     }
 
     private MedecinResponseDTO toResponse(Medecin m) {
-        MedecinResponseDTO dto = new MedecinResponseDTO();
-        dto.setNom(m.getNom());
-        dto.setPrenom(m.getPrenom());
-        Specialite s = specialiteRepository.findById(m.getSpecialite().getId()) .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Spécialité introuvable : " +m.getSpecialite().getId()));
-        dto.setSpecialite(s);
-        dto.setEmail(m.getEmail());
-        dto.setApproved(m.isApproved());
-        return dto;
+        return medecinMapper.toMedecinResponse(m);
+
+
     }
 
     public Optional<MedecinResponseDTO> approve(Long id) {
@@ -98,10 +94,11 @@ public class MedecinService {
         Medecin saved = medecinRepository.save(m);
 
         MedecinResponseDTO dto = new MedecinResponseDTO();
+        dto.setId(saved.getId());
         dto.setNom(saved.getNom());
         dto.setPrenom(saved.getPrenom());
         dto.setEmail(saved.getEmail());
-        dto.setApproved(saved.isApproved());
+        dto.setApproved(true);
 
         return dto;
     }

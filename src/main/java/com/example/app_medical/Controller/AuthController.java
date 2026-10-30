@@ -20,27 +20,35 @@ import java.util.Map;
 public class AuthController {
 
     private final JwtUtil jwtUtil;
-
-    public AuthController(UserService userService,
-                          PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
-        this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
-    }
-
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private UserMapper userMapper;
     MedecinMapper medecinMapper;
     PatientMapper patientMapper;
 
+    public AuthController(UserService userService,
+                          PasswordEncoder passwordEncoder, JwtUtil jwtUtil,MedecinMapper medecinMapper,PatientMapper patientMapper) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+        this.patientMapper = userService.getPatientMapper();
+        this.medecinMapper = medecinMapper;
+    }
+
+
+
 
     @PostMapping("/signup/patient")
-    public ResponseEntity<?> signupPatient(@RequestBody PatientRequestDTO dto) {
+    public ResponseEntity<?> signupPatient(
+            @RequestBody PatientRequestDTO dto) {
+
         ResponseEntity<?> error = checkSignup(dto);
-        if (error != null) return error;
+        if (error != null) {
+            return error;
+        }
 
         Patient saved = userService.createPatient(dto);
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(patientMapper.toPatientResponse(saved));
     }

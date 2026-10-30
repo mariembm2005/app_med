@@ -40,13 +40,15 @@ public class SecurityConfig {
         return http
                 .cors(Customizer.withDefaults())            // uses the bean below
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> {})
                 .sessionManagement(s ->
                         s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(e -> e.authenticationEntryPoint(
                         (req, res, ex) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED)))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()   // preflight
-                        .requestMatchers("/auth/login", "/auth/signup/**","/api/specialites").permitAll()
+                        .requestMatchers("/auth/login","/api/specialites","/auth/signup/patient",
+                                "/auth/signup/medecin").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -63,7 +65,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:4200"));
+        config.setAllowedOrigins(List.of("http://localhost:62493"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
 
