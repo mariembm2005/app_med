@@ -20,20 +20,22 @@ import java.util.Map;
 public class AuthController {
 
     private final JwtUtil jwtUtil;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+    private final PatientMapper patientMapper;
+    private final MedecinMapper medecinMapper;
 
     public AuthController(UserService userService,
-                          PasswordEncoder passwordEncoder, JwtUtil jwtUtil, UserMapper userMapper) {
+                          PasswordEncoder passwordEncoder,
+                          JwtUtil jwtUtil,
+                          PatientMapper patientMapper,
+                          MedecinMapper medecinMapper) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
-        this.userMapper = userMapper;
+        this.patientMapper = patientMapper;
+        this.medecinMapper = medecinMapper;
     }
-
-    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
-    private UserMapper userMapper;
-    MedecinMapper medecinMapper;
-    PatientMapper patientMapper;
 
 
     @PostMapping("/signup/patient")
