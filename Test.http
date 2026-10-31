@@ -21,19 +21,19 @@ Content-Type: application/json
 {
   "nom": "Ben Foulen",
   "prenom" : "Foulen",
-  "email": "mariem0055@example.com",
+  "email": "foulen1@example.com",
   "motDePasse": "000000000",
   "confirmMotDePasse": "000000000",
   "image": "mari.png",
-  "role": "ADMIN"
+  "role": "MEDECIN"
 }
 ###
 POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "email": "foulenmpatientnadmin0011@example.com",
-  "motDePasse": "000000000"
+  "email": "mariem0055@mail.com",
+  "motDePasse": "123456"
 }
 
 ### Update user
@@ -60,21 +60,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZWFyMjAwNSIsImlhdCI6MTc4O
 ###
 
 GET http://localhost:8080/api/medecins/not-approved
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmb3VsZW5tcGF0aWVudG5hZG1pbjAwMTFAZXhhbXBsZS5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3OTI2ODg1NjIsImV4cCI6MTc5MjY5MDM2Mn0.h0RmFZ1ChHuLoOb2cHd4qbyQG_GnT66S1Hmolr7BqrY
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW0wMDU1QG1haWwuY29tIiwicm9sZSI6IlBBVElFTlQiLCJpYXQiOjE3OTMzNjM0MTIsImV4cCI6MTc5MzM2NTIxMn0.fPtI8I1B58Ejm8xT0MVdBnCpBu6UWrycPY1yqamCcF0
 
 ###
 POST http://localhost:8080/auth/signup/patient
 Content-Type: application/json
 
 {
-  "nom": "Ben Ali",
-  "prenom": "Sami",
-  "email": "sami44@mail.com",
+  "nom": "Ben Mansour",
+  "prenom": "Mariem",
+  "email": "mariem0055@mail.com",
   "motDePasse": "123456",
   "confirmMotDePasse": "123456",
   "image": null,
-  "age": 25,
+  "age": 21,
   "telephone": "20123456"
 }
 
@@ -83,14 +82,18 @@ POST http://localhost:8080/auth/signup/medecin
 Content-Type: application/json
 
 {
-"nom": "Trabelsi",
-"prenom": "Mouna",
-"email": "mouna@mail.com",
-"motDePasse": "123456",
-"confirmMotDePasse": "123456",
-"image": null,
-"numeroOrdre": "TN-4522",
-"specialiteId": 1
+  "nom": "Br",
+  "prenom": "leila",
+  "email": "leilabr2@mail.com",
+  "motDePasse": "123456",
+  "confirmMotDePasse": "123456",
+  "image": null,
+  "numeroOrdre": "TN-455444",
+  "specialite": {
+    "id": 1,
+    "nom": "[value-2]"
+  },
+  "isApproved": false
 }
 
 

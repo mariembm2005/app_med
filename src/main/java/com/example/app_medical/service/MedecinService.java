@@ -4,6 +4,7 @@ import com.example.app_medical.dto.MedecinRequestDTO;
 import com.example.app_medical.dto.MedecinResponseDTO;
 import com.example.app_medical.entity.Medecin;
 import com.example.app_medical.entity.Specialite;
+import com.example.app_medical.mapper.MedecinMapper;
 import com.example.app_medical.repository.MedecinRepository;
 import com.example.app_medical.repository.SpecialiteRepository;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,13 @@ public class MedecinService {
 
     private final MedecinRepository medecinRepository;
     private final SpecialiteRepository specialiteRepository;
+    private final MedecinMapper medecinMapper;
 
     public MedecinService(MedecinRepository medecinRepository,
-                          SpecialiteRepository specialiteRepository) {
+                          SpecialiteRepository specialiteRepository, MedecinMapper medecinMapper) {
         this.medecinRepository = medecinRepository;
         this.specialiteRepository = specialiteRepository;
+        this.medecinMapper = medecinMapper;
     }
 
     public List<MedecinResponseDTO> getAll() {
@@ -75,6 +78,7 @@ public class MedecinService {
     }
 
     private MedecinResponseDTO toResponse(Medecin m) {
+
         MedecinResponseDTO dto = new MedecinResponseDTO();
         dto.setId(m.getId());
         dto.setNom(m.getNom());
@@ -84,6 +88,7 @@ public class MedecinService {
         dto.setNumeroOrdre(m.getNumeroOrdre());
         dto.setSpecialite(m.getSpecialite());
         return dto;
+
     }
 
     public Optional<MedecinResponseDTO> approve(Long id) {
@@ -94,6 +99,8 @@ public class MedecinService {
     private MedecinResponseDTO approve(Medecin m) {
         m.setApproved(true);
         Medecin saved = medecinRepository.save(m);
+
         return toResponse(saved);
+
     }
 }

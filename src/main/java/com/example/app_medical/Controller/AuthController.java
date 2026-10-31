@@ -22,6 +22,7 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+
     private final PatientMapper patientMapper;
     private final MedecinMapper medecinMapper;
 
@@ -38,12 +39,18 @@ public class AuthController {
     }
 
 
+
     @PostMapping("/signup/patient")
-    public ResponseEntity<?> signupPatient(@RequestBody PatientRequestDTO dto) {
+    public ResponseEntity<?> signupPatient(
+            @RequestBody PatientRequestDTO dto) {
+
         ResponseEntity<?> error = checkSignup(dto);
-        if (error != null) return error;
+        if (error != null) {
+            return error;
+        }
 
         Patient saved = userService.createPatient(dto);
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(patientMapper.toPatientResponse(saved));
     }
