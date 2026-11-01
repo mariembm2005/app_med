@@ -47,8 +47,9 @@ public class SecurityConfig {
                         (req, res, ex) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED)))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()   // preflight
-                        .requestMatchers("/auth/login","/api/specialites","/auth/signup/patient",
-                                "/auth/signup/medecin").permitAll()
+                        .requestMatchers("/auth/login", "/auth/signup/**", "/api/specialites",
+                                "/auth/forgot-password", "/auth/reset-password",
+                                "/auth/open-app").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
