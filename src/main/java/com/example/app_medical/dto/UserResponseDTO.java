@@ -1,6 +1,7 @@
 package com.example.app_medical.dto;
 
 import com.example.app_medical.entity.RoleEnum;
+import com.example.app_medical.entity.SexeEnum;
 import lombok.*;
 
 @Data
@@ -17,4 +18,6 @@ public class UserResponseDTO {
     private String email;
     private String image;
     private RoleEnum role;
+    private SexeEnum sexe;
+    private java.time.LocalDate dateNaissance;
 }

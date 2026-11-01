@@ -30,6 +30,10 @@ public abstract class Utilisateur {
     @Enumerated(EnumType.STRING)
     private RoleEnum role = RoleEnum.PATIENT;
 
+    @Enumerated(EnumType.STRING)
+    private SexeEnum sexe;
+    private java.time.LocalDate dateNaissance;
+
     public String seConnecter() {
         return "Connexion";
     }

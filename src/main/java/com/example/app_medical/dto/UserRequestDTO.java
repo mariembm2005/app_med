@@ -1,6 +1,7 @@
 package com.example.app_medical.dto;
 
 import com.example.app_medical.entity.RoleEnum;
+import com.example.app_medical.entity.SexeEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -30,4 +31,6 @@ public class UserRequestDTO {
     private String confirmMotDePasse;
     private RoleEnum role;
 
-    private String image;}
+    private String image;
+    private SexeEnum sexe;
+    private java.time.LocalDate dateNaissance;}

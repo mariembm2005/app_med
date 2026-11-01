@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class Patient extends Utilisateur {
 
-    private Integer age;
+
 
     private String telephone;
 

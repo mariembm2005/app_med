@@ -91,7 +91,7 @@ public class AuthController {
         response.setImage(user.getImage());
         response.setRole(user.getRole());
         response.setToken(jwtUtil.generateToken(user.getEmail(), user.getRole().toString()));
-        System.out.println(jwtUtil.generateToken(user.getEmail(), user.getRole().toString()));// new
+
 
 
         return ResponseEntity.ok(response);
@@ -102,9 +102,19 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("message", "Email already exists"));
         }
-        if (!dto.getMotDePasse().equals(dto.getConfirmMotDePasse())) {
+        if (dto.getMotDePasse() == null
+                || !dto.getMotDePasse().equals(dto.getConfirmMotDePasse())) {
             return ResponseEntity.badRequest()
                     .body(Map.of("message", "Passwords do not match"));
+        }
+        if (dto.getSexe() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("message", "Le sexe est obligatoire."));
+        }
+        if (dto.getDateNaissance() == null
+                || dto.getDateNaissance().isAfter(java.time.LocalDate.now())) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("message", "Date de naissance invalide."));
         }
 
         return null;
