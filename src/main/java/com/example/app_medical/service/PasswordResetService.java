@@ -75,9 +75,6 @@ public class PasswordResetService {
         if (dto.getEmail() == null || dto.getCode() == null || dto.getMotDePasse() == null) {
             throw new IllegalArgumentException("Requête invalide.");
         }
-        if (!dto.getMotDePasse().equals(dto.getConfirmMotDePasse())) {
-            throw new IllegalArgumentException("Les mots de passe ne correspondent pas.");
-        }
         if (dto.getMotDePasse().length() < 8) {
             throw new IllegalArgumentException("Le mot de passe doit contenir au moins 8 caractères.");
         }

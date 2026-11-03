@@ -10,7 +10,7 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
 
-    @Value("${spring.mail.username}")
+    @Value("mariembenmansour005@gmail.com")
     private String from;
 
     @Value("${app.reset-token-expiration-minutes:15}")
@@ -32,6 +32,7 @@ public class EmailService {
                         + "Saisissez-le dans l'application avec votre nouveau mot de passe.\n\n"
                         + "Si vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail."
         );
+        System.out.println(code);
         mailSender.send(message);
     }
 }

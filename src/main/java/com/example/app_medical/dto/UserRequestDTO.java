@@ -27,10 +27,8 @@ public class UserRequestDTO {
     private String motDePasse;
 
     @NotBlank(message = "Confirmer Mot de passe requi")
-    @Size(min = 6, message = "Password must contain at least 6 characters")
-    private String confirmMotDePasse;
+
     private RoleEnum role;
 
     private String image;
-    private SexeEnum sexe;
-    private java.time.LocalDate dateNaissance;}
+   }

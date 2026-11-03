@@ -7,12 +7,13 @@ GET https://examples.http-client.intellij.net/get
 ### =========================
 
 ### Get all users
-GET http://localhost:8080/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZvdWxlbm1wYXRpZW50bkBleGFtcGxlLmNvbSIsIm1vdERlUGFzc2UiOiIxMjM0NTYifQ.G8JEORUxrlnJ2nt2cVYreHkh2TuXXB8DaUildFa5t1U
+GET http://localhost:8081/api/specialites
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW1pQG1haWwuY29tIiwicm9sZSI6IlBBVElFTlQiLCJpYXQiOjE3OTM2MTQ0MjIsImV4cCI6MTc5MzYxNjIyMn0.XSF62u4vOeaWoSu25FeFy3dE-cYpXfQatFLMdgCr5g4
 
 ### Get one user
-GET http://localhost:8080/users/26
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZvdWxlbm1wYXRpZW50bkBleGFtcGxlLmNvbSIsIm1vdERlUGFzc2UiOiIxMjM0NTYifQ.G8JEORUxrlnJ2nt2cVYreHkh2TuXXB8DaUildFa5t1U
+GET http://localhost:8081/users/28
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW1pQG1haWwuY29tIiwicm9sZSI6IlBBVElFTlQiLCJpYXQiOjE3OTM3MjQyMjcsImV4cCI6MTc5MzcyNjAyN30.NbuNxWKyf93DzrOVpBv4vHF6l9yEsL-I3ycQi4hHvis
+
 
 ### Create user
 POST http://localhost:8080/auth/signup
@@ -28,16 +29,16 @@ Content-Type: application/json
   "role": "MEDECIN"
 }
 ###
-POST http://localhost:8080/auth/login
+POST http://localhost:8081/auth/login
 Content-Type: application/json
 
 {
-  "email": "mariem0055@mail.com",
-  "motDePasse": "123456"
+  "email": "mariembenmansour005@gmail.com",
+  "motDePasse": "00000000"
 }
 
 ### Update user
-PUT http://localhost:8080/users/1
+PUT http://localhost:8081/users/1
 Content-Type: application/json
 
 {
@@ -50,7 +51,7 @@ Content-Type: application/json
 }
 
 ### Delete user
-DELETE http://localhost:8080/users/1
+DELETE http://localhost:8081/users/28
 
 
 
@@ -63,18 +64,18 @@ GET http://localhost:8080/api/medecins/not-approved
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW0wMDU1QG1haWwuY29tIiwicm9sZSI6IlBBVElFTlQiLCJpYXQiOjE3OTMzNjM0MTIsImV4cCI6MTc5MzM2NTIxMn0.fPtI8I1B58Ejm8xT0MVdBnCpBu6UWrycPY1yqamCcF0
 
 ###
-POST http://localhost:8080/auth/signup/patient
+POST http://localhost:8081/auth/signup/patient
 Content-Type: application/json
 
 {
   "nom": "Ben Mansour",
   "prenom": "Mariem",
-  "email": "mariem0055@mail.com",
+  "email": "mariembenmansour005@gmail.com",
   "motDePasse": "123456",
-  "confirmMotDePasse": "123456",
   "image": null,
-  "age": 21,
-  "telephone": "20123456"
+  "dateNaissance": "2005-08-20",
+  "telephone": "20123456",
+  "sexe": "FEMME"
 }
 
 ###
@@ -82,9 +83,9 @@ POST http://localhost:8080/auth/signup/medecin
 Content-Type: application/json
 
 {
-  "nom": "Br",
-  "prenom": "leila",
-  "email": "leilabr2@mail.com",
+  "nom": "BO",
+  "prenom": "Mohamed",
+  "email": "medbo@mail.com",
   "motDePasse": "123456",
   "confirmMotDePasse": "123456",
   "image": null,
@@ -104,6 +105,13 @@ POST http://localhost:8080/auth/logout
 
 ### 2. Call the protected endpoint with the token
 GET http://localhost:8080/api/specialites
+###
+POST http://localhost:8081/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email" : "mariembenmansour005@gmail.com"
+}
 
 
 

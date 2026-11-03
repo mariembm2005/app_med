@@ -9,5 +9,4 @@ public class ResetPasswordRequestDTO {
     private String email;
     private String code;
     private String motDePasse;
-    private String confirmMotDePasse;
 }

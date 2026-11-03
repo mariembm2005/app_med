@@ -18,6 +18,4 @@ public class UserResponseDTO {
     private String email;
     private String image;
     private RoleEnum role;
-    private SexeEnum sexe;
-    private java.time.LocalDate dateNaissance;
 }

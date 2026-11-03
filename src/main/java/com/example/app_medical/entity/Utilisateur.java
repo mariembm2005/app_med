@@ -24,15 +24,12 @@ public abstract class Utilisateur {
     private String email;
 
     private String motDePasse;
-    private String confirmMotDePasse;
     private String image;
 
     @Enumerated(EnumType.STRING)
     private RoleEnum role = RoleEnum.PATIENT;
 
-    @Enumerated(EnumType.STRING)
-    private SexeEnum sexe;
-    private java.time.LocalDate dateNaissance;
+
 
     public String seConnecter() {
         return "Connexion";

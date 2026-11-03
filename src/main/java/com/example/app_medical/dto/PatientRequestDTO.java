@@ -1,5 +1,6 @@
 package com.example.app_medical.dto;
 
+import com.example.app_medical.entity.SexeEnum;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -16,4 +17,6 @@ public class PatientRequestDTO extends UserRequestDTO {
 
     @NotBlank(message = "Telephone requis")
     private String telephone;
+    private SexeEnum sexe;
+    private java.time.LocalDate dateNaissance;
 }

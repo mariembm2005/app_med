@@ -68,7 +68,6 @@ private PasswordEncoder  passwordEncoder = new BCryptPasswordEncoder();
 
         user.setEmail(updatedUser.getEmail());
         user.setMotDePasse(updatedUser.getMotDePasse());
-        user.setConfirmMotDePasse(updatedUser.getConfirmMotDePasse());
         user.setImage(updatedUser.getImage());
         user.setRole(updatedUser.getRole());
 

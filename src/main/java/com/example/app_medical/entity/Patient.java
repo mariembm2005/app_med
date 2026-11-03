@@ -12,6 +12,9 @@ public class Patient extends Utilisateur {
 
 
     private String telephone;
+    @Enumerated(EnumType.STRING)
+    private SexeEnum sexe;
+    private java.time.LocalDate dateNaissance;
 
     public void sInscrire() {
     }
