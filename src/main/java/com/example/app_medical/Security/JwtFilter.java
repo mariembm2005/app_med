@@ -50,6 +50,8 @@ public class JwtFilter extends OncePerRequestFilter {
         // Overrides the method that runs once per request; receives the request, response, and the chain to continue processing afterward
 
         String authHeader = request.getHeader("Authorization");
+
+        System.out.println("Authorization Header = " + authHeader);
         // Reads the "Authorization" header from the incoming request (e.g., "Bearer eyJhbGc...") — null if not sent
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {

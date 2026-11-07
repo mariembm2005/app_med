@@ -112,7 +112,41 @@ Content-Type: application/json
 {
     "email" : "mariembenmansour005@gmail.com"
 }
+###
+POST http://localhost:8081/api/specialites
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MDY5OTU4LCJleHAiOjE3OTQwNzE3NTh9.bVBEGrMZ54JjGLQTFsIel_te_CNN7mywrRCpqo3eikw
+Content-Type: application/json
 
+{
+  "nom": "Cardiologie",
+  "description": "Maladies du cœur"
+}
+###
+GET http://localhost:8081/api/specialites
+###
+GET http://localhost:8081/api/specialites/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MDY5OTU4LCJleHAiOjE3OTQwNzE3NTh9.bVBEGrMZ54JjGLQTFsIel_te_CNN7mywrRCpqo3eikw
+###
+PUT http://localhost:8081/api/specialites/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MDY5ODYzLCJleHAiOjE3OTQwNzE2NjN9.F157igxYXKx1jIhiUoVp9o978Wx4cLl8f7w_ecPp4Wg
+Content-Type: application/json
 
+{
+  "nom": "Cardiologie",
+  "description": "Spécialité du cœur et des vaisseaux"
+}
+###
+DELETE http://localhost:8081/api/specialites/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MDY5ODYzLCJleHAiOjE3OTQwNzE2NjN9.F157igxYXKx1jIhiUoVp9o978Wx4cLl8f7w_ecPp4Wg
+
+###
+
+POST localhost:8081/api/rendezvous
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MDY5ODYzLCJleHAiOjE3OTQwNzE2NjN9.F157igxYXKx1jIhiUoVp9o978Wx4cLl8f7w_ecPp4Wg
+Content-Type: application/json
+
+{
+  "patientId": 9
+}
 
 
