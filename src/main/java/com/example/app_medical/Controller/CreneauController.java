@@ -1,6 +1,7 @@
 package com.example.app_medical.Controller;
 
 import com.example.app_medical.dto.*;
+import com.example.app_medical.entity.Creneau;
 import com.example.app_medical.service.CreneauService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,17 @@ public class CreneauController {
     @PutMapping("/{id}")
     public CreneauResponseDTO update(@RequestBody CreneauRequestDTO request, @PathVariable Long id) {
         return service.update(request,id);
+    }
+    @GetMapping("/disponibles")
+    public List<CreneauResponseDTO> getDisponibles() {
+        return service.findDisponibles();
+    }
+    @PatchMapping("/reserver/{id}")
+    public CreneauResponseDTO reserver(@PathVariable Long id) {
+        return service.reserver(id);
+    }
+    @PatchMapping("/liberer/{id}")
+    public CreneauResponseDTO liberer(@PathVariable Long id) {
+        return service.liberer(id);
     }
 }

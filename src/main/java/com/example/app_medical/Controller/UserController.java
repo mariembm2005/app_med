@@ -68,4 +68,9 @@ public class UserController {
 
 
     }
+    @PostMapping("/logout/{id}")
+    public ResponseEntity<String> logout(@PathVariable Long id) {
+        userMapper.toResponseDto(userService.getUserByID(id)).setToken(null);
+        return ResponseEntity.ok("you successfully logged out");
+    }
 }

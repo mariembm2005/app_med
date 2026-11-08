@@ -57,4 +57,5 @@ public class RendezVousController {
 
         return ResponseEntity.noContent().build();
     }
+
 }

@@ -66,4 +66,31 @@ public class CreneauService  {
         }
         return null;
     }
+    public List<CreneauResponseDTO> findDisponibles(){
+        return repository.findByDisponibleTrue().stream().map(dispo->mapper.toResponse(dispo)).toList();
+    }
+    public CreneauResponseDTO reserver(Long id) {
+        Optional<Creneau> creneau = repository.findById(id);
+        if(creneau.isPresent()) {
+            Creneau creneauUpdate = creneau.get();
+            creneauUpdate.getRendezVous().setConfirme(true);
+            creneauUpdate.setDisponible(false);
+            repository.save(creneauUpdate);
+            return  mapper.toResponse(creneauUpdate);
+        }
+        return null;
+
+    }
+
+    public CreneauResponseDTO liberer(Long id) {
+        Optional<Creneau> creneau = repository.findById(id);
+        if(creneau.isPresent()) {
+            Creneau creneauUpdate = creneau.get();
+            creneauUpdate.setDisponible(true);
+            repository.save(creneauUpdate);
+            return  mapper.toResponse(creneauUpdate);
+        }
+        return null;
+
+    }
 }

@@ -111,9 +111,6 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("message", "Email already exists"));
         }
-
-
-
         return null;
     }
 }

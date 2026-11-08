@@ -27,4 +27,11 @@ public class RendezVous {
     @OneToOne
     @JoinColumn(name = "creneau_id")
     private Creneau creneau;
+
+    public boolean estConfirmé(){
+        return confirme;
+    }
+    public boolean creneauValide(){
+        return this.creneau.estDisponible();
+    }
 }

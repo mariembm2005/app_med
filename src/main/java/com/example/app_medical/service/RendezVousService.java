@@ -61,14 +61,19 @@ public class RendezVousService {
         return mapper.toDTO(rendezVousRepository.save(rdv));
     }
 
-    public void annuler(Long id) {
+    public RendezVousResponseDTO annuler(Long id) {
 
         RendezVous rdv =
                 rendezVousRepository.findById(id).orElseThrow();
+        if(rdv!=null) {
+            rdv.getCreneau().setDisponible(true);
 
-        rdv.getCreneau().setDisponible(true);
+            rendezVousRepository.delete(rdv);
+            return mapper.toDTO(rdv);
+        }
+        return null;
 
-        rendezVousRepository.delete(rdv);
+
     }
     public RendezVousResponseDTO create(
             RendezVousRequestDTO dto) {

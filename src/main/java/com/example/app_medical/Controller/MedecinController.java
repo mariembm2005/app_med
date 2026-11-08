@@ -68,10 +68,5 @@ public class MedecinController {
                 : ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/{id}/approve")
-    public ResponseEntity<MedecinResponseDTO> approve(@PathVariable Long id) {
-        return medecinService.approve(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+
 }

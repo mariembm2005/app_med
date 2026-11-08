@@ -1,7 +1,9 @@
 package com.example.app_medical.service;
 
 import com.example.app_medical.dto.*;
+import com.example.app_medical.mapper.CreneauMapper;
 import com.example.app_medical.mapper.MedecinMapper;
+import com.example.app_medical.repository.CreneauRepository;
 import com.example.app_medical.repository.MedecinRepository;
 import com.example.app_medical.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,8 @@ import java.util.List;
 public class PatientService {
     private PatientRepository patientRepository;
     private MedecinRepository medecinRepository;
+    private CreneauRepository creneauRepository;
+    private CreneauMapper creneauMapper;
     private MedecinMapper medecinMapper;
     public List<MedecinResponseDTO> rechercherMedecin(String nom) {
             return medecinRepository.findByNomContainingIgnoreCase(nom)
@@ -27,6 +31,15 @@ public class PatientService {
         return medecinRepository.findBySpecialiteId(id)
                 .stream()
                 .map(medecinMapper::toMedecinResponse)
+                .toList();
+    }
+
+    public List<CreneauResponseDTO> consulterCreneaux(Long medecinId) {
+
+        return creneauRepository
+                .findByPlageHoraireMedecinId(medecinId)
+                .stream()
+                .map(creneauMapper::toResponse)
                 .toList();
     }
 }

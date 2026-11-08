@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,4 +31,9 @@ public class PlageHoraire {
     @OneToMany(mappedBy = "plageHoraire",
             cascade = CascadeType.ALL)
     private List<Creneau> creneaux;
+
+    public List<Creneau> generateCreneaux(){
+        List<Creneau> creneau = new ArrayList<>();
+        return creneau;
+    }
 }
