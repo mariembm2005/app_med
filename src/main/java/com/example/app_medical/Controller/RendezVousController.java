@@ -48,10 +48,12 @@ public class RendezVousController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(
+    public ResponseEntity<String> delete(
             @PathVariable Long id) {
 
-        rendezVousService.delete(id);
+        if(rendezVousService.delete(id)){
+            return ResponseEntity.ok("deleted successfully");
+        }
 
         return ResponseEntity.noContent().build();
     }

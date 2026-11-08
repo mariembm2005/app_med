@@ -9,6 +9,7 @@ import org.springframework.stereotype.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -139,8 +140,17 @@ public class RendezVousService {
         );
     }
 
-    public void delete(Long id) {
+    public boolean delete(Long id) {
+        Optional<RendezVous> rd = rendezVousRepository.findById(id);
+        if (rd.isPresent()) {
+            RendezVous rdv = rd.get();
+            if(rdv.getCreneau()!=null) {
+                rdv.getCreneau().setRendezVous(null);
+            }
+            rendezVousRepository.delete(rdv);
+            return true;
 
-        rendezVousRepository.deleteById(id);
+        }
+        return false;
     }
 }

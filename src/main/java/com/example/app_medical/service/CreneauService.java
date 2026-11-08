@@ -8,6 +8,7 @@ import lombok.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,8 @@ public class CreneauService  {
 
     private final CreneauRepository repository;
     private final PlageHoraireRepository plageRepository;
+    private final RendezVousRepository rendezVousRepository;
+    private final MedecinRepository medecinRepository;
     private final CreneauMapper mapper;
 
     public CreneauResponseDTO create(CreneauRequestDTO request) {
@@ -40,7 +43,27 @@ public class CreneauService  {
         return mapper.toResponse(repository.findById(id).orElseThrow());
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public boolean delete(Long id) {
+        Creneau creneau = repository.findById(id).orElseThrow();
+        if(creneau!=null){
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
+
+    }
+    public CreneauResponseDTO update(CreneauRequestDTO request,long id) {
+        Optional<Creneau> creneau = repository.findById(id);
+        if(creneau.isPresent()) {
+            Creneau creneauUpdate = mapper.toEntity(request);
+            creneauUpdate.setPlageHoraire(plageRepository.getReferenceById(request.getPlageHoraireId()));
+            creneauUpdate.setId(id);
+            creneauUpdate.setHeureDebut(request.getHeureDebut());
+            creneauUpdate.setHeureFin(request.getHeureFin());
+            creneauUpdate.setTypeSoin(request.getTypeSoin());
+            repository.save(creneauUpdate);
+            return  mapper.toResponse(creneauUpdate);
+        }
+        return null;
     }
 }

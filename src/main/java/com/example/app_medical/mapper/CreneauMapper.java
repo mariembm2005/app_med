@@ -3,6 +3,7 @@ package com.example.app_medical.mapper;
 import com.example.app_medical.dto.*;
 import com.example.app_medical.entity.*;
 import com.example.app_medical.repository.PlageHoraireRepository;
+import com.example.app_medical.repository.RendezVousRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,7 @@ private final PlageHoraireRepository plageHoraireRepository;
         Creneau creneau = new Creneau();
         creneau.setId(request.getId());
         creneau.setDisponible(creneau.isDisponible());
-        creneau.setHeureFin(creneau.getHeureFin());
+        creneau.setHeureFin(request.getHeureFin());
         creneau.setHeureDebut(request.getHeureDebut());
         creneau.setTypeSoin(request.getTypeSoin());
         creneau.setPlageHoraire(plageHoraireRepository.getReferenceById(request.getPlageHoraireId()));

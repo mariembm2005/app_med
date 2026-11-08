@@ -15,4 +15,5 @@ public class Specialite {
 
     @Column(unique = true, nullable = false)
     private String nom;
+    private String description;
 }

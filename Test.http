@@ -54,14 +54,14 @@ Content-Type: application/json
 DELETE http://localhost:8081/users/28
 
 
-
-GET http://localhost:8080/api/hello
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZWFyMjAwNSIsImlhdCI6MTc4ODM1MDE1NCwiZXhwIjoxNzg4MzUxMDU0fQ.Qd1nOXToCuDs7GJAhz7HzzGQJ6oPs619m7LfXybqDZs
+###
+GET http://localhost:8081/api/hello
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTI4MTg5LCJleHAiOjE3OTQxMjk5ODl9.cXke97CYWJeTwoLlyqmOQ0OfkQpnUWOdqa3AF7LqmJo
 
 ###
 
-GET http://localhost:8080/api/medecins/not-approved
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW0wMDU1QG1haWwuY29tIiwicm9sZSI6IlBBVElFTlQiLCJpYXQiOjE3OTMzNjM0MTIsImV4cCI6MTc5MzM2NTIxMn0.fPtI8I1B58Ejm8xT0MVdBnCpBu6UWrycPY1yqamCcF0
+GET http://localhost:8081/api/medecins/not-approved
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTI4MTg5LCJleHAiOjE3OTQxMjk5ODl9.cXke97CYWJeTwoLlyqmOQ0OfkQpnUWOdqa3AF7LqmJo
 
 ###
 POST http://localhost:8081/auth/signup/patient
@@ -114,12 +114,12 @@ Content-Type: application/json
 }
 ###
 POST http://localhost:8081/api/specialites
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MDY5OTU4LCJleHAiOjE3OTQwNzE3NTh9.bVBEGrMZ54JjGLQTFsIel_te_CNN7mywrRCpqo3eikw
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTI4MTg5LCJleHAiOjE3OTQxMjk5ODl9.cXke97CYWJeTwoLlyqmOQ0OfkQpnUWOdqa3AF7LqmJo
 Content-Type: application/json
 
 {
-  "nom": "Cardiologie",
-  "description": "Maladies du cœur"
+  "nom": "Psychiatrie",
+  "description": "Malade de soi"
 }
 ###
 GET http://localhost:8081/api/specialites
@@ -128,7 +128,7 @@ GET http://localhost:8081/api/specialites/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MDY5OTU4LCJleHAiOjE3OTQwNzE3NTh9.bVBEGrMZ54JjGLQTFsIel_te_CNN7mywrRCpqo3eikw
 ###
 PUT http://localhost:8081/api/specialites/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MDY5ODYzLCJleHAiOjE3OTQwNzE2NjN9.F157igxYXKx1jIhiUoVp9o978Wx4cLl8f7w_ecPp4Wg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTI4MTg5LCJleHAiOjE3OTQxMjk5ODl9.cXke97CYWJeTwoLlyqmOQ0OfkQpnUWOdqa3AF7LqmJo
 Content-Type: application/json
 
 {
@@ -136,17 +136,77 @@ Content-Type: application/json
   "description": "Spécialité du cœur et des vaisseaux"
 }
 ###
-DELETE http://localhost:8081/api/specialites/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MDY5ODYzLCJleHAiOjE3OTQwNzE2NjN9.F157igxYXKx1jIhiUoVp9o978Wx4cLl8f7w_ecPp4Wg
+DELETE http://localhost:8081/api/specialites/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTI4MTg5LCJleHAiOjE3OTQxMjk5ODl9.cXke97CYWJeTwoLlyqmOQ0OfkQpnUWOdqa3AF7LqmJo
 
 ###
 
-POST localhost:8081/api/rendezvous
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MDY5ODYzLCJleHAiOjE3OTQwNzE2NjN9.F157igxYXKx1jIhiUoVp9o978Wx4cLl8f7w_ecPp4Wg
+POST localhost:8081/api/plages-horaires
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTMxNjQ5LCJleHAiOjE3OTQxMzM0NDl9.hE-zLRKhap0Ky47DnUpBVUjLgVW6Q1ESaBbcgrbVmSc
 Content-Type: application/json
 
 {
-  "patientId": 9
+  "date": "2026-11-10",
+  "heureDebut": "08:00",
+  "heureFin": "12:00",
+  "medecinId": 17
+}
+###
+GET localhost:8081/api/plages-horaires/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTMxNjQ5LCJleHAiOjE3OTQxMzM0NDl9.hE-zLRKhap0Ky47DnUpBVUjLgVW6Q1ESaBbcgrbVmSc
+###
+DELETE localhost:8081/api/plages-horaires/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTMxNjQ5LCJleHAiOjE3OTQxMzM0NDl9.hE-zLRKhap0Ky47DnUpBVUjLgVW6Q1ESaBbcgrbVmSc
+###
+PUT localhost:8081/api/plages-horaires/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTMzNTc5LCJleHAiOjE3OTQxMzUzNzl9.rI_iMXcmqCuMp24fB-cPd-secNua0sfXqa4GT6C0yT8
+Content-Type: application/json
+
+{
+  "date": "2026-11-10",
+  "heureDebut": "08:00",
+  "heureFin": "13:00",
+  "medecinId": 17
 }
 
+###
+PUT localhost:8081/api/creneaux/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTMzNTc5LCJleHAiOjE3OTQxMzUzNzl9.rI_iMXcmqCuMp24fB-cPd-secNua0sfXqa4GT6C0yT8
+Content-Type: application/json
 
+{
+  "heureDebut": "10:00",
+  "heureFin": "11:30",
+  "typeSoin": "Consultation",
+  "plageHoraireId": 3
+}
+###
+DELETE localhost:8081/api/creneaux/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTMzNTc5LCJleHAiOjE3OTQxMzUzNzl9.rI_iMXcmqCuMp24fB-cPd-secNua0sfXqa4GT6C0yT8
+###
+POST localhost:8081/api/rendezvous
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTM1NjA1LCJleHAiOjE3OTQxMzc0MDV9.BdudwwvKeSkZS4GPZXYnQDGbeB4jJLlPJii1AyRtB70
+Content-Type: application/json
+
+{
+  "patientId": 14,
+  "creneauId": 1
+}
+###
+GET localhost:8081/api/rendezvous
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTMzNTc5LCJleHAiOjE3OTQxMzUzNzl9.rI_iMXcmqCuMp24fB-cPd-secNua0sfXqa4GT6C0yT8
+###
+GET localhost:8081/api/rendezvous/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTMzNTc5LCJleHAiOjE3OTQxMzUzNzl9.rI_iMXcmqCuMp24fB-cPd-secNua0sfXqa4GT6C0yT8
+###
+PUT localhost:8081/api/rendezvous/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTMzNTc5LCJleHAiOjE3OTQxMzUzNzl9.rI_iMXcmqCuMp24fB-cPd-secNua0sfXqa4GT6C0yT8
+Content-Type: application/json
+
+{
+  "patientId": 31,
+  "creneauId": 1
+}
+###
+DELETE localhost:8081/api/rendezvous/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTM1NjA1LCJleHAiOjE3OTQxMzc0MDV9.BdudwwvKeSkZS4GPZXYnQDGbeB4jJLlPJii1AyRtB70

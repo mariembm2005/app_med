@@ -3,6 +3,7 @@ package com.example.app_medical.Controller;
 import com.example.app_medical.dto.*;
 import com.example.app_medical.service.CreneauService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +31,14 @@ public class CreneauController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        if (service.delete(id)) {
+            return ResponseEntity.ok("delete successfully");
+        }
+        return ResponseEntity.notFound().build();
+    }
+    @PutMapping("/{id}")
+    public CreneauResponseDTO update(@RequestBody CreneauRequestDTO request, @PathVariable Long id) {
+        return service.update(request,id);
     }
 }
