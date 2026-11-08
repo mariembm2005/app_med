@@ -31,4 +31,8 @@ public class Creneau {
 
     @OneToOne(mappedBy = "creneau")
     private RendezVous rendezVous;
+
+    public boolean estDisponible() {
+        return this.disponible;
+    }
 }

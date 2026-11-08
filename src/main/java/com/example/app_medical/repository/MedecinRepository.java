@@ -1,5 +1,6 @@
 package com.example.app_medical.repository;
 
+import com.example.app_medical.dto.MedecinResponseDTO;
 import com.example.app_medical.entity.Medecin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,4 +13,6 @@ public interface MedecinRepository extends JpaRepository<Medecin, Long> {
     boolean existsByNumeroOrdre(String numeroOrdre);
     List<Medecin> findBySpecialiteId(Long specialiteId);
     List<Medecin>findByApproved(boolean approved);
+
+    List<Medecin> findByNomContainingIgnoreCase(String nom);
 }
