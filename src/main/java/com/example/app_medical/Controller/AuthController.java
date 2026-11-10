@@ -4,8 +4,10 @@ import com.example.app_medical.Security.JwtUtil;
 import com.example.app_medical.dto.*;
 import com.example.app_medical.entity.*;
 import com.example.app_medical.mapper.*;
+import com.example.app_medical.service.TokenBlacklistService;
 import com.example.app_medical.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,17 +27,20 @@ public class AuthController {
 
     private final PatientMapper patientMapper;
     private final MedecinMapper medecinMapper;
+    private final TokenBlacklistService tokenBlacklistService;
+
 
     public AuthController(UserService userService,
                           PasswordEncoder passwordEncoder,
                           JwtUtil jwtUtil,
                           PatientMapper patientMapper,
-                          MedecinMapper medecinMapper) {
+                          MedecinMapper medecinMapper,TokenBlacklistService tokenBlacklistService) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
         this.patientMapper = patientMapper;
         this.medecinMapper = medecinMapper;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
 
 
@@ -112,5 +117,21 @@ public class AuthController {
                     .body(Map.of("message", "Email already exists"));
         }
         return null;
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(
+            HttpServletRequest request) {
+
+        String authHeader = request.getHeader("Authorization");
+
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+
+            String token = authHeader.substring(7);
+
+            // Ajouter le token dans une blacklist
+            tokenBlacklistService.blacklistToken(token);
+        }
+
+        return ResponseEntity.ok("Déconnexion réussie");
     }
 }

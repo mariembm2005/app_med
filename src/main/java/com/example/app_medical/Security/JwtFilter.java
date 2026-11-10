@@ -58,6 +58,7 @@ public class JwtFilter extends OncePerRequestFilter {
             // Only proceeds with token logic if the header exists AND follows the expected "Bearer <token>" format
 
             String token = authHeader.substring(7);
+
             // Strips off the first 7 characters ("Bearer ") to isolate just the raw JWT string
 
             String username = jwtUtil.extractIdentity(token);

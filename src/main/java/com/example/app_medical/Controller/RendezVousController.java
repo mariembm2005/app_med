@@ -11,6 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/rendezvous")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class RendezVousController {
 
     private final RendezVousService rendezVousService;

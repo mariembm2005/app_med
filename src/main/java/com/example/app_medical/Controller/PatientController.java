@@ -16,6 +16,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+
 public class PatientController {
     private final RendezVousMapper rendezVousMapper;
     private PatientService patientService;

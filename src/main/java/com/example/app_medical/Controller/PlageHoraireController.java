@@ -12,6 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/plages-horaires")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class PlageHoraireController {
 
     private final PlageHoraireService service;

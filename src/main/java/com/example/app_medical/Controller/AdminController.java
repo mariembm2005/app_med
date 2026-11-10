@@ -10,9 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class AdminController {
     private MedecinService medecinService;
     private SpecialiteService specialiteService;
+    public AdminController(MedecinService medecinService, SpecialiteService specialiteService) {
+        this.medecinService =  medecinService;
+        this.specialiteService =  specialiteService;
+    }
     @PutMapping("/{id}/approve")
     public ResponseEntity<MedecinResponseDTO> approve(@PathVariable Long id) {
         return medecinService.approve(id)

@@ -8,7 +8,6 @@ GET https://examples.http-client.intellij.net/get
 
 ### Get all users
 GET http://localhost:8081/api/specialites
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW1pQG1haWwuY29tIiwicm9sZSI6IlBBVElFTlQiLCJpYXQiOjE3OTM2MTQ0MjIsImV4cCI6MTc5MzYxNjIyMn0.XSF62u4vOeaWoSu25FeFy3dE-cYpXfQatFLMdgCr5g4
 
 ### Get one user
 GET http://localhost:8081/users/28
@@ -210,3 +209,17 @@ Content-Type: application/json
 ###
 DELETE localhost:8081/api/rendezvous/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTM1NjA1LCJleHAiOjE3OTQxMzc0MDV9.BdudwwvKeSkZS4GPZXYnQDGbeB4jJLlPJii1AyRtB70
+###
+PUT localhost:8081/admin/52/approve
+###
+PUT localhost:8081/users/24
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MzM2MzE3LCJleHAiOjE3OTQzMzgxMTd9.OywxfLA74YKXoVRUbCEebZ-iKMJ8A1krKaeyi8oipHs
+Content-Type: application/json
+
+{
+  "motDePasse": "0000",
+  "email": "admin@mail.com",
+  "role": "ADMIN"
+}
+
+###
