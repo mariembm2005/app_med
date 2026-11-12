@@ -1,7 +1,7 @@
 package com.example.app_medical.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 import java.time.LocalTime;
@@ -21,18 +21,12 @@ public class Creneau {
 
     private LocalTime heureFin;
 
-    private boolean disponible = true;
+    private Boolean disponible;
 
     private String typeSoin;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plage_horaire_id")
+    @JsonIgnore
     private PlageHoraire plageHoraire;
-
-    @OneToOne(mappedBy = "creneau")
-    private RendezVous rendezVous;
-
-    public boolean estDisponible() {
-        return this.disponible;
-    }
 }

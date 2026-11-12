@@ -3,7 +3,8 @@ package com.example.app_medical.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,16 +25,14 @@ public class PlageHoraire {
 
     private LocalTime heureFin;
 
-    @ManyToOne
-    @JoinColumn(name = "medecin_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medecin_id", nullable = false)
     private Medecin medecin;
 
-    @OneToMany(mappedBy = "plageHoraire",
-            cascade = CascadeType.ALL)
-    private List<Creneau> creneaux;
-
-    public List<Creneau> generateCreneaux(){
-        List<Creneau> creneau = new ArrayList<>();
-        return creneau;
-    }
+    @OneToMany(
+            mappedBy = "plageHoraire",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Creneau> creneaux = new ArrayList<>();
 }

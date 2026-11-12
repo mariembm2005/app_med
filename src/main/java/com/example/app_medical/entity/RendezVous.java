@@ -25,13 +25,13 @@ public class RendezVous {
     private Patient patient;
 
     @OneToOne
-    @JoinColumn(name = "creneau_id")
+    @JoinColumn(name = "creneau_id", nullable = true)
     private Creneau creneau;
 
     public boolean estConfirmé(){
         return confirme;
     }
     public boolean creneauValide(){
-        return this.creneau.estDisponible();
+        return this.creneau.getDisponible();
     }
 }

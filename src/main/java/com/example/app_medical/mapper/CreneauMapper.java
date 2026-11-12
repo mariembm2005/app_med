@@ -14,7 +14,7 @@ private final PlageHoraireRepository plageHoraireRepository;
     public CreneauResponseDTO toResponse(Creneau creneau){
         CreneauResponseDTO creneauResponseDTO = new CreneauResponseDTO();
         creneauResponseDTO.setId(creneau.getId());
-        creneauResponseDTO.setDisponible(creneau.isDisponible());
+        creneauResponseDTO.setDisponible(creneau.getDisponible());
         creneauResponseDTO.setHeureFin(creneau.getHeureFin());
         creneauResponseDTO.setHeureDebut(creneau.getHeureDebut());
         creneauResponseDTO.setTypeSoin(creneau.getTypeSoin());
@@ -25,7 +25,7 @@ private final PlageHoraireRepository plageHoraireRepository;
     public Creneau toEntity(CreneauRequestDTO request){
         Creneau creneau = new Creneau();
         creneau.setId(request.getId());
-        creneau.setDisponible(creneau.isDisponible());
+        creneau.setDisponible(creneau.getDisponible());
         creneau.setHeureFin(request.getHeureFin());
         creneau.setHeureDebut(request.getHeureDebut());
         creneau.setTypeSoin(request.getTypeSoin());

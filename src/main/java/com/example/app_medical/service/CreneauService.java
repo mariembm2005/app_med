@@ -73,7 +73,6 @@ public class CreneauService  {
         Optional<Creneau> creneau = repository.findById(id);
         if(creneau.isPresent()) {
             Creneau creneauUpdate = creneau.get();
-            creneauUpdate.getRendezVous().setConfirme(true);
             creneauUpdate.setDisponible(false);
             repository.save(creneauUpdate);
             return  mapper.toResponse(creneauUpdate);

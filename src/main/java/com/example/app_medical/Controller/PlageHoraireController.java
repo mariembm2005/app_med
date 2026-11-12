@@ -1,9 +1,8 @@
 package com.example.app_medical.Controller;
 
-import com.example.app_medical.dto.*;
-import com.example.app_medical.mapper.PlageHoraireMapper;
-import com.example.app_medical.service.*;
-import lombok.*;
+import com.example.app_medical.dto.PlageHoraireRequestDTO;
+import com.example.app_medical.entity.PlageHoraire;
+import com.example.app_medical.service.PlageHoraireService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,38 +10,44 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/plages-horaires")
-@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
-
 public class PlageHoraireController {
 
-    private final PlageHoraireService service;
+    private final PlageHoraireService plageHoraireService;
 
-    @PostMapping
-    public PlageHoraireResponseDTO create(
-            @RequestBody PlageHoraireRequestDTO request) {
-
-        return service.create(request);
+    public PlageHoraireController(
+            PlageHoraireService plageHoraireService
+    ) {
+        this.plageHoraireService = plageHoraireService;
     }
 
     @GetMapping
-    public List<PlageHoraireResponseDTO> getAll() {
+    public ResponseEntity<List<PlageHoraire>> liste() {
+        return ResponseEntity.ok(plageHoraireService.getAll());
+    }
 
-        return service.getAll();
+    @PostMapping
+    public ResponseEntity<PlageHoraire> create(
+            @RequestBody PlageHoraireRequestDTO dto
+    ) {
+        return ResponseEntity.ok(plageHoraireService.create(dto));
     }
-    @GetMapping("/{id}")
-    public PlageHoraireResponseDTO getById(@PathVariable Long id) {
-        return service.findById(id);
-    }
+
     @PutMapping("/{id}")
-    public PlageHoraireResponseDTO update(@RequestBody PlageHoraireRequestDTO request, @PathVariable Long id) {
-        return service.update(request,id);
+    public ResponseEntity<PlageHoraire> update(
+            @PathVariable("id") Long id,
+            @RequestBody PlageHoraireRequestDTO dto
+    ) {
+        return ResponseEntity.ok(
+                plageHoraireService.update(dto,id)
+        );
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable long id) {
-        if (service.delete(id)) {
-            return ResponseEntity.ok("plage horaire deleted successfully");
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<String> delete(
+            @PathVariable("id") Long id
+    ) {
+        plageHoraireService.delete(id);
+        return ResponseEntity.ok("Plage horaire supprimée");
     }
 }

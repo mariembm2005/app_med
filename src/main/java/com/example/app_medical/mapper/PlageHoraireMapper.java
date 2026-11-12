@@ -18,7 +18,6 @@ public class PlageHoraireMapper {
 
     public PlageHoraire toEntity(PlageHoraireRequestDTO request){
         PlageHoraire plageHoraire = new PlageHoraire();
-        plageHoraire.setId(request.getId());
         plageHoraire.setDate(request.getDate());
         plageHoraire.setHeureDebut(request.getHeureDebut());
         plageHoraire.setHeureFin(request.getHeureFin());

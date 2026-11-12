@@ -31,7 +31,7 @@ public class RendezVousService {
                 creneauRepository.findById(request.getCreneauId())
                         .orElseThrow();
 
-        if (!creneau.isDisponible()) {
+        if (!creneau.getDisponible()) {
             throw new RuntimeException(
                     "Ce créneau est déjà réservé");
         }
@@ -149,9 +149,6 @@ public class RendezVousService {
         Optional<RendezVous> rd = rendezVousRepository.findById(id);
         if (rd.isPresent()) {
             RendezVous rdv = rd.get();
-            if(rdv.getCreneau()!=null) {
-                rdv.getCreneau().setRendezVous(null);
-            }
             rendezVousRepository.delete(rdv);
             return true;
 
