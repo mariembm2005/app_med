@@ -11,20 +11,43 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CreneauMapper {
 private final PlageHoraireRepository plageHoraireRepository;
-    public CreneauResponseDTO toResponse(Creneau creneau){
-        CreneauResponseDTO creneauResponseDTO = new CreneauResponseDTO();
-        creneauResponseDTO.setId(creneau.getId());
-        creneauResponseDTO.setDisponible(creneau.getDisponible());
-        creneauResponseDTO.setHeureFin(creneau.getHeureFin());
-        creneauResponseDTO.setHeureDebut(creneau.getHeureDebut());
-        creneauResponseDTO.setTypeSoin(creneau.getTypeSoin());
-        return creneauResponseDTO;
+private final RendezVousRepository rendezVousRepository;
+    public CreneauResponseDTO toDTO(Creneau creneau) {
 
+        CreneauResponseDTO dto = new CreneauResponseDTO();
+
+        dto.setId(creneau.getId());
+        dto.setHeureDebut(creneau.getHeureDebut());
+        dto.setHeureFin(creneau.getHeureFin());
+        dto.setDisponible(creneau.getDisponible());
+        dto.setTypeSoin(creneau.getTypeSoin());
+        PlageHoraire plage = creneau.getPlageHoraire();
+        dto.setDate(plage.getDate());
+        dto.setPlageId(plage.getId());
+        dto.setMedecinId(plage.getMedecin().getId());
+        dto.setMedecinNom(plage.getMedecin().getPrenom() + " " + plage.getMedecin().getNom());
+        RendezVous rdv = rendezVousRepository
+                .findByCreneauId(creneau.getId())
+                .orElse(null);
+
+        if (rdv != null) {
+
+            Patient patient = rdv.getPatient();
+
+            if (patient != null) {
+                dto.setPatientNom(patient.getNom());
+                dto.setPatientPrenom(patient.getPrenom());
+                dto.setPatientTelephone(patient.getTelephone());
+            }
+        }
+
+        return dto;
     }
 
     public Creneau toEntity(CreneauRequestDTO request){
         Creneau creneau = new Creneau();
         creneau.setId(request.getId());
+
         creneau.setDisponible(creneau.getDisponible());
         creneau.setHeureFin(request.getHeureFin());
         creneau.setHeureDebut(request.getHeureDebut());

@@ -1,9 +1,8 @@
 package com.example.app_medical.dto;
 
-import com.example.app_medical.entity.PlageHoraire;
-import com.example.app_medical.entity.RendezVous;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
@@ -14,4 +13,14 @@ public class CreneauResponseDTO {
     private LocalTime heureFin;
     private boolean disponible;
     private String typeSoin;
+    private String patientNom;
+    private String patientPrenom;
+    private String patientTelephone;
+    private String motif;
+
+    // new: needed to place the créneau in the planning
+    private LocalDate date;
+    private Long plageId;
+    private Long medecinId;
+    private String medecinNom;
 }

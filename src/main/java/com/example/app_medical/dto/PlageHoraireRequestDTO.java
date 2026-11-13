@@ -11,4 +11,5 @@ public class PlageHoraireRequestDTO {
     private LocalTime heureDebut;
     private LocalTime heureFin;
     private Long medecinId;
+    private Integer dureeCreneau;
 }

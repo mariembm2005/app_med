@@ -29,18 +29,18 @@ public class CreneauService  {
                         .orElseThrow()
         );
 
-        return mapper.toResponse(repository.save(creneau));
+        return mapper.toDTO(repository.save(creneau));
     }
 
     public List<CreneauResponseDTO> getAll() {
         return repository.findAll()
                 .stream()
-                .map(mapper::toResponse)
+                .map(mapper::toDTO)
                 .toList();
     }
 
     public CreneauResponseDTO getById(Long id) {
-        return mapper.toResponse(repository.findById(id).orElseThrow());
+        return mapper.toDTO(repository.findById(id).orElseThrow());
     }
 
     public boolean delete(Long id) {
@@ -62,12 +62,12 @@ public class CreneauService  {
             creneauUpdate.setHeureFin(request.getHeureFin());
             creneauUpdate.setTypeSoin(request.getTypeSoin());
             repository.save(creneauUpdate);
-            return  mapper.toResponse(creneauUpdate);
+            return  mapper.toDTO(creneauUpdate);
         }
         return null;
     }
     public List<CreneauResponseDTO> findDisponibles(){
-        return repository.findByDisponibleTrue().stream().map(dispo->mapper.toResponse(dispo)).toList();
+        return repository.findByDisponibleTrue().stream().map(dispo->mapper.toDTO(dispo)).toList();
     }
     public CreneauResponseDTO reserver(Long id) {
         Optional<Creneau> creneau = repository.findById(id);
@@ -75,7 +75,7 @@ public class CreneauService  {
             Creneau creneauUpdate = creneau.get();
             creneauUpdate.setDisponible(false);
             repository.save(creneauUpdate);
-            return  mapper.toResponse(creneauUpdate);
+            return  mapper.toDTO(creneauUpdate);
         }
         return null;
 
@@ -87,9 +87,19 @@ public class CreneauService  {
             Creneau creneauUpdate = creneau.get();
             creneauUpdate.setDisponible(true);
             repository.save(creneauUpdate);
-            return  mapper.toResponse(creneauUpdate);
+            return  mapper.toDTO(creneauUpdate);
         }
         return null;
 
+    }
+    public void changerDisponibilite(Long id, boolean disponible) {
+
+        Creneau creneau = repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Créneau introuvable"));
+
+        creneau.setDisponible(disponible);
+
+        repository.save(creneau);
     }
 }
