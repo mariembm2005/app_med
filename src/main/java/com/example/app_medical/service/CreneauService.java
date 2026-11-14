@@ -7,6 +7,7 @@ import com.example.app_medical.repository.*;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,5 +92,13 @@ public class CreneauService  {
         }
         return null;
 
+    }
+    public List<CreneauResponseDTO> getByMedecinAndDate(Long medecinId, LocalDate date) {
+        List<Creneau> creneaux = (date != null)
+                ? repository.findByPlageHoraireMedecinIdAndPlageHoraireDateAndDisponibleTrue(medecinId, date)
+                : repository.findByPlageHoraireMedecinId(medecinId).stream()
+                .filter(Creneau::getDisponible).toList();
+
+        return creneaux.stream().map(mapper::toResponse).toList();
     }
 }

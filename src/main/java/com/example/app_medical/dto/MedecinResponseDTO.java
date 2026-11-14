@@ -16,6 +16,8 @@ public class MedecinResponseDTO {
     private boolean approved;
     private String numeroOrdre;
     private Specialite specialite;
+    private String adresse; // <-- Ajoute ceci
+    private String image;
 
 
 }

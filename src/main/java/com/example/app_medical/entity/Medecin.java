@@ -17,6 +17,8 @@ public class Medecin extends Utilisateur {
     private Specialite specialite;
     @Column(nullable = false)
     private Boolean approved = false;
+    @Column
+    private String adresse;
 
     public boolean isApproved() {
         return Boolean.TRUE.equals(approved);

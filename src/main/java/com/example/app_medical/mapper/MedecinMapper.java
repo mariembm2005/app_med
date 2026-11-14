@@ -52,7 +52,7 @@ public class MedecinMapper extends UserMapper {
         dto.setApproved(medecin.isApproved());
         dto.setNumeroOrdre(medecin.getNumeroOrdre());
         dto.setSpecialite(medecin.getSpecialite());
-
+        dto.setAdresse(medecin.getAdresse());
         return dto;
     }
 

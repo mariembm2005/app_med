@@ -9,6 +9,7 @@ import lombok.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,16 +24,56 @@ public class PlageHoraireService {
     private final MedecinRepository medecinRepository;
     private final PlageHoraireMapper mapper;
 
+    @Transactional
     public PlageHoraire create(PlageHoraireRequestDTO request) {
-
+        // 1. Créer l'entité via le mapper ou manuellement si le mapper coince avec les LocalTime
         PlageHoraire plage = mapper.toEntity(request);
+
+        // Sécurité au cas où le mapper ne convertit pas les heures ou la date automatiquement :
+        // Sécurité si les heures viennent déjà en LocalTime :
+        if (request.getHeureDebut() != null && plage.getHeureDebut() == null) {
+            plage.setHeureDebut(request.getHeureDebut());
+        }
+        if (request.getHeureFin() != null && plage.getHeureFin() == null) {
+            plage.setHeureFin(request.getHeureFin());
+        }
 
         plage.setMedecin(
                 medecinRepository.findById(request.getMedecinId())
-                        .orElseThrow()
+                        .orElseThrow(() -> new RuntimeException("Médecin introuvable"))
         );
 
-        return repository.save(plage);
+        // Sauvegarde d'abord la plage pour obtenir son ID
+        PlageHoraire savedPlage = repository.save(plage);
+
+        // 2. Génération automatique des créneaux (par pas de 30 minutes)
+        int dureeCreneaux = 30;
+
+        LocalTime debut = savedPlage.getHeureDebut();
+        LocalTime fin = savedPlage.getHeureFin();
+
+        List<Creneau> creneaux = new ArrayList<>();
+        LocalTime courant = debut;
+
+        while (!courant.plusMinutes(dureeCreneaux).isAfter(fin)) {
+            Creneau creneau = new Creneau();
+            creneau.setHeureDebut(courant);
+
+            LocalTime prochainCourant = courant.plusMinutes(dureeCreneaux);
+            creneau.setHeureFin(prochainCourant);
+
+            creneau.setDisponible(true);
+            creneau.setPlageHoraire(savedPlage); // Liaison avec la plage
+
+            creneaux.add(creneau);
+            courant = prochainCourant;
+        }
+
+        // Sauvegarder tous les créneaux générés en base
+        creneauRepository.saveAll(creneaux);
+        savedPlage.setCreneaux(creneaux);
+
+        return savedPlage;
     }
 
     public List<PlageHoraire> getAll() {

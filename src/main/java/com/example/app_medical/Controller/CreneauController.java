@@ -4,9 +4,11 @@ import com.example.app_medical.dto.*;
 import com.example.app_medical.entity.Creneau;
 import com.example.app_medical.service.CreneauService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -55,5 +57,13 @@ public class CreneauController {
     @PatchMapping("/liberer/{id}")
     public CreneauResponseDTO liberer(@PathVariable Long id) {
         return service.liberer(id);
+    }
+
+    @GetMapping("/patient/medecin/{id}/creneaux") // ⬅️ Modifie ici pour correspondre à Retrofit
+    public List<CreneauResponseDTO> getCreneauxByMedecin(
+            @PathVariable Long id,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return service.getByMedecinAndDate(id, date);
     }
 }

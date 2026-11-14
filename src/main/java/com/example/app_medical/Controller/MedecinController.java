@@ -3,7 +3,10 @@ package com.example.app_medical.Controller;
 import com.example.app_medical.Security.JwtUtil;
 import com.example.app_medical.dto.MedecinRequestDTO;
 import com.example.app_medical.dto.MedecinResponseDTO;
+import com.example.app_medical.entity.Specialite;
+import com.example.app_medical.repository.MedecinRepository;
 import com.example.app_medical.service.MedecinService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +18,8 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 
 public class MedecinController {
-
+    @Autowired
+    private MedecinRepository medecinRepository;
     private final MedecinService medecinService;
     private JwtUtil  jwtUtil;
     public MedecinController(MedecinService medecinService, JwtUtil jwtUtil) {
@@ -68,6 +72,25 @@ public class MedecinController {
         return medecinService.delete(id)
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/specialites")
+    public ResponseEntity<List<Specialite>> getSpecialites() {
+        return ResponseEntity.ok(medecinRepository.findDistinctSpecialites());
+    }
+
+    @GetMapping("/localisations")
+    public ResponseEntity<List<String>> getLocalisations() {
+        return ResponseEntity.ok(medecinRepository.findDistinctAdresses());
+    }
+
+    @GetMapping("/filtrer")
+    public ResponseEntity<List<MedecinResponseDTO>> filtrerMedecins(
+            @RequestParam(required = false) Long specialiteId,
+            @RequestParam(required = false) String localisation) {
+
+        List<MedecinResponseDTO> medecins = medecinService.filtrerMedecins(specialiteId, localisation);
+        return ResponseEntity.ok(medecins);
     }
 
 

@@ -14,11 +14,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PatientService {
-    private PatientRepository patientRepository;
-    private MedecinRepository medecinRepository;
-    private CreneauRepository creneauRepository;
-    private CreneauMapper creneauMapper;
-    private MedecinMapper medecinMapper;
+    private final PatientRepository patientRepository;
+    private final MedecinRepository medecinRepository;
+    private final CreneauRepository creneauRepository;
+    private final CreneauMapper creneauMapper;
+    private final MedecinMapper medecinMapper;
     public List<MedecinResponseDTO> rechercherMedecin(String nom) {
             return medecinRepository.findByNomContainingIgnoreCase(nom)
                     .stream()

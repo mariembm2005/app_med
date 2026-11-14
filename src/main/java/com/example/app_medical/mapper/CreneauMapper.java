@@ -18,6 +18,9 @@ private final PlageHoraireRepository plageHoraireRepository;
         creneauResponseDTO.setHeureFin(creneau.getHeureFin());
         creneauResponseDTO.setHeureDebut(creneau.getHeureDebut());
         creneauResponseDTO.setTypeSoin(creneau.getTypeSoin());
+        creneauResponseDTO.setDate(
+                creneau.getPlageHoraire() != null ? creneau.getPlageHoraire().getDate() : null
+        );
         return creneauResponseDTO;
 
     }
@@ -25,7 +28,7 @@ private final PlageHoraireRepository plageHoraireRepository;
     public Creneau toEntity(CreneauRequestDTO request){
         Creneau creneau = new Creneau();
         creneau.setId(request.getId());
-        creneau.setDisponible(creneau.getDisponible());
+        creneau.setDisponible(true);   // ❌ ceci est dans toResponse
         creneau.setHeureFin(request.getHeureFin());
         creneau.setHeureDebut(request.getHeureDebut());
         creneau.setTypeSoin(request.getTypeSoin());

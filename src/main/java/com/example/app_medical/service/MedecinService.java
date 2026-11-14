@@ -87,6 +87,8 @@ public class MedecinService {
         dto.setApproved(m.isApproved());
         dto.setNumeroOrdre(m.getNumeroOrdre());
         dto.setSpecialite(m.getSpecialite());
+        dto.setAdresse(m.getAdresse()); // <--- Ajoute cette ligne
+        dto.setImage(m.getImage());
         return dto;
 
     }
@@ -102,5 +104,23 @@ public class MedecinService {
 
         return toResponse(saved);
 
+    }
+
+    public List<MedecinResponseDTO> filtrerMedecins(Long specialiteId, String localisation) {
+        List<Medecin> medecins;
+
+        if (specialiteId != null && localisation != null && !localisation.isEmpty()) {
+            medecins = medecinRepository.findBySpecialiteIdAndAdresse(specialiteId, localisation);
+        } else if (specialiteId != null) {
+            medecins = medecinRepository.findBySpecialiteId(specialiteId);
+        } else if (localisation != null && !localisation.isEmpty()) {
+            medecins = medecinRepository.findByAdresse(localisation);
+        } else {
+            medecins = medecinRepository.findAll();
+        }
+
+        return medecins.stream()
+                .map(this::toResponse)
+                .toList();
     }
 }
