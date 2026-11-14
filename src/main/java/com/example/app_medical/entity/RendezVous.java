@@ -34,4 +34,5 @@ public class RendezVous {
     public boolean creneauValide(){
         return this.creneau.getDisponible();
     }
+
 }

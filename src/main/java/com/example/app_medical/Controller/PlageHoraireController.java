@@ -39,7 +39,7 @@ public class PlageHoraireController {
             @RequestBody PlageHoraireRequestDTO dto
     ) {
         return ResponseEntity.ok(
-                plageHoraireService.update(dto,id)
+                plageHoraireService.update(id,dto)
         );
     }
 

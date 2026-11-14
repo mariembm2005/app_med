@@ -7,7 +7,6 @@ import com.example.app_medical.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
 import org.springframework.stereotype.*;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -24,13 +23,74 @@ public class PlageHoraireService {
     private final MedecinRepository medecinRepository;
     private final PlageHoraireMapper mapper;
 
+    private void validerDto(PlageHoraireRequestDTO dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException(
+                    "Les informations de la plage sont obligatoires."
+            );
+        }
+
+        if (dto.getMedecinId() == null) {
+            throw new IllegalArgumentException(
+                    "L'identifiant du médecin est obligatoire."
+            );
+        }
+
+        if (dto.getDate() == null) {
+            throw new IllegalArgumentException(
+                    "La date est obligatoire."
+            );
+        }
+
+        if (dto.getHeureDebut() == null || dto.getHeureFin() == null) {
+            throw new IllegalArgumentException(
+                    "Les heures de début et de fin sont obligatoires."
+            );
+        }
+
+        if (!dto.getHeureFin().isAfter(dto.getHeureDebut())) {
+            throw new IllegalArgumentException(
+                    "L'heure de fin doit être après l'heure de début."
+            );
+        }
+
+        if (dto.getDureeCreneau() == null || dto.getDureeCreneau() <= 0) {
+            throw new IllegalArgumentException(
+                    "La durée du créneau doit être supérieure à zéro."
+            );
+        }
+    }
+
     @Transactional
     public PlageHoraire create(PlageHoraireRequestDTO request) {
-        // 1. Créer l'entité via le mapper ou manuellement si le mapper coince avec les LocalTime
+        validerDto(request);
+
+        // Vérification des chevauchements de plages horaires pour ce médecin à cette date
+        List<PlageHoraire> plagesExistantes =
+                repository.findByMedecinIdAndDate(
+                        request.getMedecinId(),
+                        request.getDate()
+                );
+
+        for (PlageHoraire plageExistante : plagesExistantes) {
+            boolean chevauchement =
+                    request.getHeureDebut().isBefore(plageExistante.getHeureFin())
+                            && request.getHeureFin().isAfter(plageExistante.getHeureDebut());
+
+            if (chevauchement) {
+                throw new IllegalStateException(
+                        "Création impossible : une plage existe déjà entre "
+                                + plageExistante.getHeureDebut()
+                                + " et "
+                                + plageExistante.getHeureFin()
+                                + "."
+                );
+            }
+        }
+
+        // 1. Créer l'entité via le mapper
         PlageHoraire plage = mapper.toEntity(request);
 
-        // Sécurité au cas où le mapper ne convertit pas les heures ou la date automatiquement :
-        // Sécurité si les heures viennent déjà en LocalTime :
         if (request.getHeureDebut() != null && plage.getHeureDebut() == null) {
             plage.setHeureDebut(request.getHeureDebut());
         }
@@ -46,8 +106,8 @@ public class PlageHoraireService {
         // Sauvegarde d'abord la plage pour obtenir son ID
         PlageHoraire savedPlage = repository.save(plage);
 
-        // 2. Génération automatique des créneaux (par pas de 30 minutes)
-        int dureeCreneaux = 30;
+        // 2. Génération automatique des créneaux
+        int dureeCreneaux = request.getDureeCreneau() != null ? request.getDureeCreneau() : 30;
 
         LocalTime debut = savedPlage.getHeureDebut();
         LocalTime fin = savedPlage.getHeureFin();
@@ -77,28 +137,57 @@ public class PlageHoraireService {
     }
 
     public List<PlageHoraire> getAll() {
-
         return repository.findAll()
                 .stream()
                 .toList();
     }
-    public PlageHoraire update(PlageHoraireRequestDTO request, Long id) {
-        Optional<PlageHoraire> plage = repository.findById(id);
-        if (plage.isPresent()) {
-            PlageHoraire po = plage.get();
-            po.setId(id);
-            po.setDate(request.getDate());
-            po.setMedecin(medecinRepository.getById(request.getMedecinId()));
-            po.setHeureDebut(request.getHeureDebut());
-            po.setHeureFin(request.getHeureFin());
-            repository.save(po);
-            return po;
+
+    @Transactional
+    public PlageHoraire update(Long id, PlageHoraireRequestDTO dto) {
+        PlageHoraire plage = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException(
+                        "Plage horaire introuvable avec l'id : " + id
+                ));
+
+        for (Creneau creneau : plage.getCreneaux()) {
+            if (Boolean.FALSE.equals(creneau.getDisponible())) {
+                throw new IllegalStateException(
+                        "Modification impossible : le créneau "
+                                + creneau.getHeureDebut()
+                                + " - "
+                                + creneau.getHeureFin()
+                                + " est déjà réservé."
+                );
+            }
         }
-        return null;
+
+        plage.setDate(dto.getDate());
+        plage.setHeureDebut(dto.getHeureDebut());
+        plage.setHeureFin(dto.getHeureFin());
+
+        plage.getCreneaux().clear();
+
+        int dureeCreneaux = dto.getDureeCreneau() != null ? dto.getDureeCreneau() : 30;
+        LocalTime debut = plage.getHeureDebut();
+        LocalTime fin = plage.getHeureFin();
+        LocalTime courant = debut;
+
+        while (!courant.plusMinutes(dureeCreneaux).isAfter(fin)) {
+            Creneau creneau = new Creneau();
+            creneau.setHeureDebut(courant);
+            LocalTime prochainCourant = courant.plusMinutes(dureeCreneaux);
+            creneau.setHeureFin(prochainCourant);
+            creneau.setDisponible(true);
+            creneau.setPlageHoraire(plage);
+            plage.getCreneaux().add(creneau);
+            courant = prochainCourant;
+        }
+
+        return repository.save(plage);
     }
+
     @Transactional
     public void delete(Long id) {
-
         PlageHoraire plage = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException(
                         "Plage horaire introuvable avec l'id : " + id
@@ -107,7 +196,6 @@ public class PlageHoraireService {
         List<Creneau> creneaux = new ArrayList<>(plage.getCreneaux());
 
         for (Creneau creneau : creneaux) {
-
             List<RendezVous> rendezVousList =
                     rendezVousRepository.findAll()
                             .stream()
@@ -133,9 +221,6 @@ public class PlageHoraireService {
 
     public PlageHoraire findById(Long id) {
         Optional<PlageHoraire> po = repository.findById(id);
-        if (po.isPresent()) {
-            return po.get();
-        }
-        return null;
+        return po.orElse(null);
     }
 }

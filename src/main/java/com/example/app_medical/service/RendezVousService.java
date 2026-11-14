@@ -51,25 +51,29 @@ public class RendezVousService {
     }
 
 
-    public RendezVousResponseDTO confirmer(Long id) {
+    public RendezVous confirmer(Long id) {
 
         RendezVous rdv =
                 rendezVousRepository.findById(id).orElseThrow();
 
-        rdv.setConfirme(true);
+        if(rdv!=null) {
+            rdv.getCreneau().setDisponible(false);
 
-        return mapper.toDTO(rendezVousRepository.save(rdv));
+            rdv.setConfirme(true);
+            return rendezVousRepository.save(rdv);
+        }
+        return null;
     }
 
-    public RendezVousResponseDTO annuler(Long id) {
+    public RendezVous annuler(Long id) {
 
         RendezVous rdv =
                 rendezVousRepository.findById(id).orElseThrow();
         if(rdv!=null) {
             rdv.getCreneau().setDisponible(true);
 
-            rendezVousRepository.delete(rdv);
-            return mapper.toDTO(rdv);
+            rdv.setConfirme(false);
+            return rendezVousRepository.save(rdv);
         }
         return null;
 
@@ -108,14 +112,14 @@ public class RendezVousService {
                 .toList();
     }
 
-    public RendezVousResponseDTO getById(Long id) {
+    public RendezVous getById(Long id) {
 
         RendezVous rendezVous =
                 rendezVousRepository.findById(id)
                         .orElseThrow(() ->
                                 new RuntimeException("Rendez-vous not found"));
 
-        return mapper.toDTO(rendezVous);
+        return rendezVous;
     }
 
     public RendezVousResponseDTO update(

@@ -1,5 +1,5 @@
 package com.example.app_medical.Controller;
-
+import com.example.app_medical.entity.RendezVous;
 import com.example.app_medical.dto.*;
 import com.example.app_medical.service.CreneauService;
 import com.example.app_medical.service.MedecinService;
@@ -13,15 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @RestController // ⬅️ TRÈS IMPORTANT : @RestController (et non @Controller) pour du JSON
 @RequestMapping("/api/patient") // ⬅️ TRÈS IMPORTANT : Pour matcher avec l'app mobile
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class PatientController {
 
+
     private final PatientService patientService;
     private final RendezVousService rendezVousService;
-    private final MedecinService medecinService;
+
     private final CreneauService creneauService;
 
     @GetMapping("/rechercher-medecin/{nom}")
@@ -36,9 +38,9 @@ public class PatientController {
 
     @PatchMapping("/{id}/confirmer")
     public ResponseEntity<String> confirmer(@PathVariable Long id) {
-        RendezVousResponseDTO r = rendezVousService.getById(id);
-        if(r != null) {
-            r.setConfirme(true);
+        // On appelle directement la méthode confirmer du service qui existe déjà
+        RendezVous r = rendezVousService.confirmer(id);
+        if (r != null) {
             return ResponseEntity.ok("Rendez vous " + r.getId() + " est confirmé");
         }
         return ResponseEntity.badRequest().build();
@@ -46,10 +48,10 @@ public class PatientController {
 
     @PatchMapping("/{id}/annuler")
     public ResponseEntity<String> annuler(@PathVariable Long id) {
-        RendezVousResponseDTO r = rendezVousService.getById(id);
-        if(r != null) {
-            r.setConfirme(false);
-            return ResponseEntity.ok("Rendez vous " + r.getId() + " est annulé");
+        // On appelle directement la méthode annuler du service qui existe déjà
+        RendezVous r = rendezVousService.annuler(id);
+        if (r != null) {
+            return ResponseEntity.ok("Rendez vous " + id + " est annulé");
         }
         return ResponseEntity.badRequest().build();
     }
@@ -60,6 +62,7 @@ public class PatientController {
     public List<RendezVousResponseDTO> getMesRendezVous() {
         return rendezVousService.getAll();
     }
+
 
     @DeleteMapping("/rendezvous/{id}")
     public ResponseEntity<Void> supprimerRendezVous(@PathVariable Long id) {
@@ -77,3 +80,4 @@ public class PatientController {
         return creneauService.getByMedecinAndDate(id, date);
     }
 }
+
