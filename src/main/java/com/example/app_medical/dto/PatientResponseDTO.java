@@ -7,9 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class PatientResponseDTO extends UserResponseDTO {
-    private int age;
+
     private String telephone;
 
-    private SexeEnum sexe;
-    private java.time.LocalDate dateNaissance;
+
 }

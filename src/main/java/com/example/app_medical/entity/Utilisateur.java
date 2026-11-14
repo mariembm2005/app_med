@@ -26,6 +26,9 @@ public abstract class Utilisateur {
     private String motDePasse;
     private String image;
 
+
+    private SexeEnum sexe;
+    private java.time.LocalDate dateNaissance;
     @Enumerated(EnumType.STRING)
     private RoleEnum role = RoleEnum.PATIENT;
 

@@ -30,5 +30,8 @@ public class UserRequestDTO {
 
     private RoleEnum role;
 
+    private SexeEnum sexe;
+    private java.time.LocalDate dateNaissance;
+
     private String image;
    }

@@ -55,6 +55,10 @@ public class UserMapper {
         userEntitytmp.setRole(userRequestDTO.getRole());
         userEntitytmp.setImage(userRequestDTO.getImage());
 
+        userEntitytmp.setSexe(userRequestDTO.getSexe());
+        userEntitytmp.setDateNaissance(userRequestDTO.getDateNaissance());
+
+
     }
     public List<UserResponseDTO> toResponseDtoLis(List<Utilisateur> users) {
         return users.stream()
@@ -69,6 +73,8 @@ public class UserMapper {
         dto.setEmail(user.getEmail());
         dto.setImage(user.getImage());
         dto.setRole(user.getRole());
+        dto.setSexe(user.getSexe());
+        dto.setDateNaissance(user.getDateNaissance());
     }
 
 }
