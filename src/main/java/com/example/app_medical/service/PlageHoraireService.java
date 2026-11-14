@@ -223,4 +223,10 @@ public class PlageHoraireService {
         Optional<PlageHoraire> po = repository.findById(id);
         return po.orElse(null);
     }
+
+    public List<PlageHoraire> getByMedecinId(Long medecinId) {
+        return repository.findAll().stream()
+                .filter(p -> p.getMedecin() != null && p.getMedecin().getId().equals(medecinId))
+                .toList();
+    }
 }

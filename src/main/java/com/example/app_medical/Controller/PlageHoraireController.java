@@ -50,4 +50,9 @@ public class PlageHoraireController {
         plageHoraireService.delete(id);
         return ResponseEntity.ok("Plage horaire supprimée");
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<PlageHoraire>> getByMedecin(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(plageHoraireService.getByMedecinId(id));
+    }
 }
