@@ -6,6 +6,7 @@ import com.example.app_medical.mapper.*;
 import com.example.app_medical.repository.*;
 import lombok.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,35 +21,7 @@ public class RendezVousService {
     private final CreneauRepository creneauRepository;
     private final RendezVousMapper mapper;
 
-    public RendezVousResponseDTO reserver(
-            RendezVousRequestDTO request) {
 
-        Patient patient =
-                patientRepository.findById(request.getPatientId())
-                        .orElseThrow();
-
-        Creneau creneau =
-                creneauRepository.findById(request.getCreneauId())
-                        .orElseThrow();
-
-        if (!creneau.getDisponible()) {
-            throw new RuntimeException(
-                    "Ce créneau est déjà réservé");
-        }
-
-        RendezVous rdv = new RendezVous();
-
-        rdv.setDateReservation(LocalDate.now());
-        rdv.setConfirme(false);
-        rdv.setPatient(patient);
-        rdv.setCreneau(creneau);
-
-        creneau.setDisponible(false);
-
-        creneauRepository.save(creneau);
-
-        return mapper.toDTO(rendezVousRepository.save(rdv));
-    }
 
 
     public RendezVous confirmer(Long id) {
@@ -79,28 +52,31 @@ public class RendezVousService {
 
 
     }
-    public RendezVousResponseDTO create(
-            RendezVousRequestDTO dto) {
+    public RendezVousResponseDTO create(RendezVousRequestDTO dto) {
+        Patient patient = patientRepository.findById(dto.getPatientId())
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
 
-        Patient patient =
-                patientRepository.findById(dto.getPatientId())
-                        .orElseThrow(() ->
-                                new RuntimeException("Patient not found"));
+        Creneau creneau = creneauRepository.findById(dto.getCreneauId())
+                .orElseThrow(() -> new RuntimeException("Creneau not found"));
 
-        Creneau creneau =
-                creneauRepository.findById(dto.getCreneauId())
-                        .orElseThrow(() ->
-                                new RuntimeException("Creneau not found"));
+        // 1. Vérifier si le créneau est disponible
+        if (creneau.getDisponible() != null && !creneau.getDisponible()) {
+            throw new RuntimeException("Ce créneau est déjà réservé");
+        }
 
-        RendezVous rendezVous =
-                mapper.toEntity(dto);
-
+        // 2. Créer le rendez-vous
+        RendezVous rendezVous = new RendezVous();
         rendezVous.setDateReservation(LocalDate.now());
         rendezVous.setConfirme(false);
+        rendezVous.setPatient(patient);
+        rendezVous.setCreneau(creneau);
 
-        RendezVous saved =
-                rendezVousRepository.save(rendezVous);
+        // 3. Rendre le créneau indisponible et le sauvegarder
+        creneau.setDisponible(false);
+        creneauRepository.save(creneau);
 
+        // 4. Sauvegarder le rendez-vous et retourner le DTO
+        RendezVous saved = rendezVousRepository.save(rendezVous);
         return mapper.toDTO(saved);
     }
 
@@ -149,14 +125,31 @@ public class RendezVousService {
         );
     }
 
+    @Transactional
     public boolean delete(Long id) {
         Optional<RendezVous> rd = rendezVousRepository.findById(id);
         if (rd.isPresent()) {
             RendezVous rdv = rd.get();
+
+            Creneau creneau = rdv.getCreneau();
+            if (creneau != null) {
+                creneau.setDisponible(true);
+                creneauRepository.save(creneau);
+            }
+
             rendezVousRepository.delete(rdv);
             return true;
-
         }
         return false;
+    }
+    public List<RendezVousResponseDTO> getRendezVousParPatientEmail(String email) {
+        Patient patient = patientRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Patient introuvable"));
+
+        List<RendezVous> rendezVousList = rendezVousRepository.findByPatientId(patient.getId());
+
+        return rendezVousList.stream()
+                .map(mapper::toDTO)
+                .toList();
     }
 }

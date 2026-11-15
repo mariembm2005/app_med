@@ -6,6 +6,7 @@ import com.example.app_medical.service.CreneauService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -51,8 +52,11 @@ public class CreneauController {
         return service.findDisponibles();
     }
     @PatchMapping("/reserver/{id}")
-    public CreneauResponseDTO reserver(@PathVariable Long id) {
-        return service.reserver(id);
+    public ResponseEntity<CreneauResponseDTO> reserver(@PathVariable Long id, Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(401).build();
+        }
+        return ResponseEntity.ok(service.reserver(id, authentication.getName()));
     }
     @PatchMapping("/liberer/{id}")
     public CreneauResponseDTO liberer(@PathVariable Long id) {

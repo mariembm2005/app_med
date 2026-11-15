@@ -6,6 +6,7 @@ import com.example.app_medical.mapper.*;
 import com.example.app_medical.repository.*;
 import lombok.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +21,7 @@ public class CreneauService  {
     private final RendezVousRepository rendezVousRepository;
     private final MedecinRepository medecinRepository;
     private final CreneauMapper mapper;
+    private final PatientRepository patientRepository;
 
     public CreneauResponseDTO create(CreneauRequestDTO request) {
 
@@ -70,16 +72,28 @@ public class CreneauService  {
     public List<CreneauResponseDTO> findDisponibles(){
         return repository.findByDisponibleTrue().stream().map(dispo->mapper.toDTO(dispo)).toList();
     }
-    public CreneauResponseDTO reserver(Long id) {
-        Optional<Creneau> creneau = repository.findById(id);
-        if(creneau.isPresent()) {
-            Creneau creneauUpdate = creneau.get();
-            creneauUpdate.setDisponible(false);
-            repository.save(creneauUpdate);
-            return  mapper.toDTO(creneauUpdate);
-        }
-        return null;
+    @Transactional
+    public CreneauResponseDTO reserver(Long id, String email) {
+        Creneau creneau = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Créneau introuvable"));
 
+        if (!creneau.getDisponible()) {
+            throw new RuntimeException("Ce créneau n'est plus disponible");
+        }
+
+        Patient patient = patientRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Patient introuvable"));
+
+        RendezVous rdv = new RendezVous();
+        rdv.setCreneau(creneau);
+        rdv.setPatient(patient);
+        rdv.setConfirme(false);
+        rendezVousRepository.save(rdv);
+
+        creneau.setDisponible(false);
+        repository.save(creneau);
+
+        return mapper.toResponse(creneau);
     }
 
     public CreneauResponseDTO liberer(Long id) {

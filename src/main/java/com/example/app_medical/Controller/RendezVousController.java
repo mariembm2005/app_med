@@ -12,6 +12,7 @@ import com.example.app_medical.service.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,11 +38,13 @@ public class RendezVousController {
                 rendezVousService.create(dto));
     }
 
-    @GetMapping
-    public ResponseEntity<List<RendezVousResponseDTO>> getAll() {
-
-        return ResponseEntity.ok(
-                rendezVousService.getAll());
+    @GetMapping("/patient")
+    public ResponseEntity<List<RendezVousResponseDTO>> getMesRendezVous(Authentication authentication) {
+        if (authentication == null) {
+            return ResponseEntity.status(401).build();
+        }
+        String email = authentication.getName(); // Extrait l'email du token JWT
+        return ResponseEntity.ok(rendezVousService.getRendezVousParPatientEmail(email));
     }
 
     @GetMapping("/{id}")
