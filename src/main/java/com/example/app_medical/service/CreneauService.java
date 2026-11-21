@@ -73,7 +73,12 @@ public class CreneauService  {
         return repository.findByDisponibleTrue().stream().map(dispo->mapper.toDTO(dispo)).toList();
     }
     @Transactional
-    public CreneauResponseDTO reserver(Long id, String email) {
+    public CreneauResponseDTO reserver(
+            Long id,
+            String email,
+            String resumeChatbot,
+            String specialiteRecommandee
+    ) {
         Creneau creneau = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Créneau introuvable"));
 
@@ -87,7 +92,9 @@ public class CreneauService  {
         RendezVous rdv = new RendezVous();
         rdv.setCreneau(creneau);
         rdv.setPatient(patient);
+        rdv.setDateReservation(LocalDate.now());
         rdv.setConfirme(false);
+        rdv.setResumeChatbot(resumeChatbot);
         rendezVousRepository.save(rdv);
 
         creneau.setDisponible(false);

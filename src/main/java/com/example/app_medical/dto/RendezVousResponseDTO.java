@@ -12,7 +12,7 @@ public class RendezVousResponseDTO {
     private boolean confirme;
     private Long patientId;
     private Long creneauId;
-
+    private String resumeChatbot;
     // Champs pour l'affichage mobile
     private LocalDate dateCreneau;
     private String heureCreneau;

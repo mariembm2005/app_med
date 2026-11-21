@@ -52,6 +52,7 @@ public class RendezVousService {
 
 
     }
+    @Transactional
     public RendezVousResponseDTO create(RendezVousRequestDTO dto) {
         Patient patient = patientRepository.findById(dto.getPatientId())
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
@@ -64,18 +65,35 @@ public class RendezVousService {
             throw new RuntimeException("Ce créneau est déjà réservé");
         }
 
-        // 2. Créer le rendez-vous
+        // 2. Vérifier si la spécialité du médecin lié au créneau correspond à celle recommandée par le chatbot
+        String specialiteCreneau = (creneau.getPlageHoraire() != null
+                && creneau.getPlageHoraire().getMedecin() != null
+                && creneau.getPlageHoraire().getMedecin().getSpecialite() != null)
+                ? creneau.getPlageHoraire().getMedecin().getSpecialite().getNom()
+                : null;
+
+        String resumeValide = null;
+        if (dto.getResumeChatbot() != null
+                && !dto.getResumeChatbot().isBlank()
+                && dto.getSpecialiteRecommandee() != null
+                && specialiteCreneau != null
+                && specialiteCreneau.equalsIgnoreCase(dto.getSpecialiteRecommandee().trim())) {
+            resumeValide = dto.getResumeChatbot().trim();
+        }
+
+        // 3. Créer le rendez-vous
         RendezVous rendezVous = new RendezVous();
         rendezVous.setDateReservation(LocalDate.now());
         rendezVous.setConfirme(false);
         rendezVous.setPatient(patient);
         rendezVous.setCreneau(creneau);
+        rendezVous.setResumeChatbot(resumeValide);
 
-        // 3. Rendre le créneau indisponible et le sauvegarder
+        // 4. Rendre le créneau indisponible et le sauvegarder
         creneau.setDisponible(false);
         creneauRepository.save(creneau);
 
-        // 4. Sauvegarder le rendez-vous et retourner le DTO
+        // 5. Sauvegarder le rendez-vous et retourner le DTO
         RendezVous saved = rendezVousRepository.save(rendezVous);
         return mapper.toDTO(saved);
     }

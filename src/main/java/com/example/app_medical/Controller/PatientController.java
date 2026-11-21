@@ -14,8 +14,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-@RestController // ⬅️ TRÈS IMPORTANT : @RestController (et non @Controller) pour du JSON
-@RequestMapping("/api/patient") // ⬅️ TRÈS IMPORTANT : Pour matcher avec l'app mobile
+@RestController
+@RequestMapping("/api/patient")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class PatientController {

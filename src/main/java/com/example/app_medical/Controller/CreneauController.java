@@ -52,11 +52,18 @@ public class CreneauController {
         return service.findDisponibles();
     }
     @PatchMapping("/reserver/{id}")
-    public ResponseEntity<CreneauResponseDTO> reserver(@PathVariable Long id, Authentication authentication) {
+    public ResponseEntity<CreneauResponseDTO> reserver(
+            @PathVariable Long id,
+            @RequestParam(required = false) String resumeChatbot,
+            @RequestParam(required = false) String specialiteRecommandee,
+            Authentication authentication
+    ) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(401).build();
         }
-        return ResponseEntity.ok(service.reserver(id, authentication.getName()));
+        return ResponseEntity.ok(
+                service.reserver(id, authentication.getName(), resumeChatbot, specialiteRecommandee)
+        );
     }
     @PatchMapping("/liberer/{id}")
     public CreneauResponseDTO liberer(@PathVariable Long id) {

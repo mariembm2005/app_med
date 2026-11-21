@@ -74,40 +74,40 @@ public class RendezVousController {
 
         return ResponseEntity.noContent().build();
     }
-    @Transactional
-    public RendezVousResponseDTO reserver(RendezVousRequestDTO dto) {
+    //@Transactional
+    //public RendezVousResponseDTO reserver(RendezVousRequestDTO dto) {
 
         // 1. Vérifier le créneau
-        Creneau creneau = creneauRepository.findById(dto.getCreneauId())
-                .orElseThrow(() ->
-                        new RuntimeException("Créneau introuvable"));
+        //Creneau creneau = creneauRepository.findById(dto.getCreneauId())
+                //.orElseThrow(() ->
+                        //new RuntimeException("Créneau introuvable"));
 
         // 2. Vérifier sa disponibilité
-        if (!creneau.getDisponible()) {
-            throw new RuntimeException(
-                    "Ce créneau n'est plus disponible");
+       // if (!creneau.getDisponible()) {
+            //throw new RuntimeException(
+                   // "Ce créneau n'est plus disponible");
         }
 
         // 3. Récupérer le patient
-        Patient patient = patientRepository.findById(dto.getPatientId())
-                .orElseThrow(() ->
-                        new RuntimeException("Patient introuvable"));
+        //Patient patient = patientRepository.findById(dto.getPatientId())
+                //.orElseThrow(() ->
+                        //new RuntimeException("Patient introuvable"));
 
         // 4. Créer le rendez-vous
-        RendezVous rendezVous = new RendezVous();
+       // RendezVous rendezVous = new RendezVous();
 
-        rendezVous.setCreneau(creneau);
-        rendezVous.setPatient(patient);
-        rendezVous.setConfirme(false);
+        //rendezVous.setCreneau(creneau);
+       // rendezVous.setPatient(patient);
+        //rendezVous.setConfirme(false);
 
         // 5. Enregistrer
-        RendezVous saved = rendezVousRepository.save(rendezVous);
+        //RendezVous saved = rendezVousRepository.save(rendezVous);
 
         // 6. Rendre le créneau indisponible
-        creneau.setDisponible(false);
-        creneauRepository.save(creneau);
+        //creneau.setDisponible(false);
+        //creneauRepository.save(creneau);
 
-        return rendezVousMapper.toDTO(saved);
-    }
+       // return rendezVousMapper.toDTO(saved);
+    //}
 
-}
+//}

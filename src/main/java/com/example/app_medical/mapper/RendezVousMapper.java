@@ -35,6 +35,7 @@ public class RendezVousMapper {
         dto.setId(entity.getId());
         dto.setConfirme(entity.isConfirme());
         dto.setDateReservation(entity.getDateReservation());
+        dto.setResumeChatbot(entity.getResumeChatbot());
 
         if (entity.getPatient() != null) {
             dto.setPatientId(entity.getPatient().getId());

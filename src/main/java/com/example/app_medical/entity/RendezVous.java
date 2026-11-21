@@ -20,6 +20,9 @@ public class RendezVous {
 
     private boolean confirme;
 
+    @Column(columnDefinition = "TEXT")
+    private String resumeChatbot;
+
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;

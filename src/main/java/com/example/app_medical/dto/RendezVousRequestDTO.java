@@ -8,4 +8,6 @@ public class RendezVousRequestDTO {
     private Long id;
     private Long patientId;
     private Long creneauId;
+    private String resumeChatbot;
+    private String specialiteRecommandee;
 }
