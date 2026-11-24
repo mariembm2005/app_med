@@ -9,6 +9,7 @@ import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,6 @@ public class RendezVousService {
     private final PatientRepository patientRepository;
     private final CreneauRepository creneauRepository;
     private final RendezVousMapper mapper;
-
 
 
 

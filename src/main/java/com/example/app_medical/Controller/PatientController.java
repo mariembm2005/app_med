@@ -79,5 +79,9 @@ public class PatientController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return creneauService.getByMedecinAndDate(id, date);
     }
+    @GetMapping("/{id}")
+    public PatientResponseDTO getById(@PathVariable  Long id) {
+        return patientService.getById(id);
+    }
 }
 

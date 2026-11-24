@@ -12,5 +12,9 @@ public interface RendezVousRepository
         extends JpaRepository<RendezVous, Long> {
     Optional<RendezVous> findByCreneauId(Long creneauId);
     List<RendezVous> findByPatientId(Long patientId);
+    Optional<RendezVous> findByIdAndPatientId(
+            Long rendezVousId,
+            Long patientId
+    );
 
 }

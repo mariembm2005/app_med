@@ -183,34 +183,34 @@ Content-Type: application/json
 }
 ###
 GET localhost:8081/api/creneaux
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0NTcwNTYzLCJleHAiOjE3OTQ1NzIzNjN9.hbM0HRx7eZwxI9OisT-DytaK8gSfepkWcDzv5PRm3mU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk1NDYxNzYyLCJleHAiOjE3OTU0NjM1NjJ9.RU2oizCQy8OSfgWtgsxe3LSJK7GB0JqWVZdQxq0JYbY
 ###
 POST localhost:8081/api/rendezvous
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTM1NjA1LCJleHAiOjE3OTQxMzc0MDV9.BdudwwvKeSkZS4GPZXYnQDGbeB4jJLlPJii1AyRtB70
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWFAbS5jb20iLCJyb2xlIjoiTUVERUNJTiIsImlhdCI6MTc5NTUzOTg4MywiZXhwIjoxNzk1NTQxNjgzfQ.wwRlFz1xqrWVE8AW-nh4MfIUxnSRgvqAnG8-blXh5XY
 Content-Type: application/json
 
 {
-  "patientId": 14,
-  "creneauId": 1
+  "patientId": 51,
+  "creneauId": 164
 }
 ###
-GET localhost:8081/api/rendezvous
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTM1NjA1LCJleHAiOjE3OTQxMzc0MDV9.BdudwwvKeSkZS4GPZXYnQDGbeB4jJLlPJii1AyRtB70
+GET localhost:8081/api/rendezvous/12
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWFAbS5jb20iLCJyb2xlIjoiTUVERUNJTiIsImlhdCI6MTc5NTUzOTg4MywiZXhwIjoxNzk1NTQxNjgzfQ.wwRlFz1xqrWVE8AW-nh4MfIUxnSRgvqAnG8-blXh5XY
 ###
 GET localhost:8081/api/rendezvous/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTMzNTc5LCJleHAiOjE3OTQxMzUzNzl9.rI_iMXcmqCuMp24fB-cPd-secNua0sfXqa4GT6C0yT8
 ###
-PUT localhost:8081/api/rendezvous/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTMzNTc5LCJleHAiOjE3OTQxMzUzNzl9.rI_iMXcmqCuMp24fB-cPd-secNua0sfXqa4GT6C0yT8
+PUT localhost:8081/api/rendezvous/11
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk1NDYxNzYyLCJleHAiOjE3OTU0NjM1NjJ9.RU2oizCQy8OSfgWtgsxe3LSJK7GB0JqWVZdQxq0JYbY
 Content-Type: application/json
 
 {
-  "patientId": 31,
-  "creneauId": 1
+  "patientId": 51,
+  "creneauId": 154
 }
 ###
-DELETE localhost:8081/api/rendezvous/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0MTM1NjA1LCJleHAiOjE3OTQxMzc0MDV9.BdudwwvKeSkZS4GPZXYnQDGbeB4jJLlPJii1AyRtB70
+GET localhost:8081/api/rendezvous/13
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWFAbS5jb20iLCJyb2xlIjoiTUVERUNJTiIsImlhdCI6MTc5NTU0NzA4MCwiZXhwIjoxNzk1NTQ4ODgwfQ.zTkuebRwARRMNTHRhAJ3I4IwkA-sLVGAz_YxakJKMsQ
 ###
 PUT localhost:8081/admin/52/approve
 ###
@@ -234,4 +234,27 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1Q
 
 ###
 GET localhost:8081/api/creneaux
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk0NTEwNjE1LCJleHAiOjE3OTQ1MTI0MTV9.Ebvnk6RpwmPHalj30yk4KbB9xRWSW9XYER-ITKYgM0w
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk1NDYxNzYyLCJleHAiOjE3OTU0NjM1NjJ9.RU2oizCQy8OSfgWtgsxe3LSJK7GB0JqWVZdQxq0JYbY
+###
+POST localhost:8081/api/chatbot/message
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk1NDUwOTkzLCJleHAiOjE3OTU0NTI3OTN9.g4XzYJsciD7e8qdv4vTWzPjdoO6sOXALk-HSOmBzs8k
+
+{
+  "patientId": 14,
+  "rendezVousId": 2,
+  "historique": [
+    {
+      "role": "user",
+      "contenu": "Depuis plusieurs jours, j'ai des palpitations."
+    },
+    {
+      "role": "assistant",
+      "contenu": "Avez-vous une douleur thoracique ou un essoufflement ?"
+    },
+    {
+      "role": "user",
+      "contenu": "Oui, je suis essoufflé et j'ai parfois une douleur thoracique."
+    }
+  ]
+}

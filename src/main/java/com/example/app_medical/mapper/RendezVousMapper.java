@@ -2,10 +2,7 @@ package com.example.app_medical.mapper;
 
 import com.example.app_medical.dto.RendezVousRequestDTO;
 import com.example.app_medical.dto.RendezVousResponseDTO;
-import com.example.app_medical.entity.Creneau;
-import com.example.app_medical.entity.Medecin;
-import com.example.app_medical.entity.PlageHoraire;
-import com.example.app_medical.entity.RendezVous;
+import com.example.app_medical.entity.*;
 import com.example.app_medical.repository.*;
 import org.springframework.stereotype.Component;
 
@@ -30,46 +27,47 @@ public class RendezVousMapper {
         return entity;
     }
 
-    public RendezVousResponseDTO toDTO(RendezVous entity) {
-        RendezVousResponseDTO dto = new RendezVousResponseDTO();
-        dto.setId(entity.getId());
-        dto.setConfirme(entity.isConfirme());
-        dto.setDateReservation(entity.getDateReservation());
-        dto.setResumeChatbot(entity.getResumeChatbot());
-
-        if (entity.getPatient() != null) {
-            dto.setPatientId(entity.getPatient().getId());
+    public RendezVousResponseDTO toDTO(RendezVous rdv) {
+        if (rdv == null) {
+            return null;
         }
 
-        Creneau c = entity.getCreneau();
-        if (c != null) {
-            dto.setCreneauId(c.getId());
+        RendezVousResponseDTO dto = new RendezVousResponseDTO();
+        dto.setId(rdv.getId());
+        dto.setDateReservation(rdv.getDateReservation());
+        dto.setConfirme(rdv.isConfirme());
+        dto.setResumeChatbot(rdv.getResumeChatbot());
 
-            if (c.getHeureDebut() != null && c.getHeureFin() != null) {
-                dto.setHeureCreneau(c.getHeureDebut() + " - " + c.getHeureFin());
-            } else if (c.getHeureDebut() != null) {
-                dto.setHeureCreneau(c.getHeureDebut().toString());
+        if (rdv.getPatient() != null) {
+            Patient patient = rdv.getPatient();
+            dto.setPatientId(patient.getId());
+            dto.setPatientNom(patient.getNom());
+            dto.setPatientPrenom(patient.getPrenom());
+            dto.setPatientTelephone(patient.getTelephone());
+        }
+
+        if (rdv.getCreneau() != null) {
+            Creneau creneau = rdv.getCreneau();
+            dto.setCreneauId(creneau.getId());
+
+            if (creneau.getHeureDebut() != null && creneau.getHeureFin() != null) {
+                dto.setHeureCreneau(creneau.getHeureDebut() + " - " + creneau.getHeureFin());
+            } else if (creneau.getHeureDebut() != null) {
+                dto.setHeureCreneau(creneau.getHeureDebut().toString());
             }
 
-            PlageHoraire p = c.getPlageHoraire();
-            if (p != null) {
-                dto.setDateCreneau(p.getDate());               // la date qui manquait
+            if (creneau.getPlageHoraire() != null) {
+                PlageHoraire plage = creneau.getPlageHoraire();
+                dto.setDateCreneau(plage.getDate());
 
-                Medecin m = p.getMedecin();
-                if (m != null) {
-                    dto.setNomMedecin(m.getPrenom() + " " + m.getNom());   // "Sami ben Ali"
-                    dto.setPrenomMedecin(m.getPrenom());
-                    if (m.getSpecialite() != null) {
-                        dto.setSpecialite(m.getSpecialite().getNom());
-                    }
-                    dto.setCabinet(m.getAdresse());            // voir le point ci-dessous
+                if (plage.getMedecin() != null) {
+                    Medecin medecin = plage.getMedecin();
+                    dto.setNomMedecin(medecin.getNom());
+                    dto.setPrenomMedecin(medecin.getPrenom());
                 }
             }
         }
 
-        if (dto.getCabinet() == null || dto.getCabinet().isBlank()) {
-            dto.setCabinet("Cabinet médical");
-        }
         return dto;
     }
 }

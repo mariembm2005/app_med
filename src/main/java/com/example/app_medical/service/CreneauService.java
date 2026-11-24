@@ -32,18 +32,18 @@ public class CreneauService  {
                         .orElseThrow()
         );
 
-        return mapper.toDTO(repository.save(creneau));
+        return mapper.toResponse(repository.save(creneau));
     }
 
     public List<CreneauResponseDTO> getAll() {
         return repository.findAll()
                 .stream()
-                .map(mapper::toDTO)
+                .map(mapper::toResponse)
                 .toList();
     }
 
     public CreneauResponseDTO getById(Long id) {
-        return mapper.toDTO(repository.findById(id).orElseThrow());
+        return mapper.toResponse(repository.findById(id).orElseThrow());
     }
 
     public boolean delete(Long id) {
@@ -65,12 +65,12 @@ public class CreneauService  {
             creneauUpdate.setHeureFin(request.getHeureFin());
             creneauUpdate.setTypeSoin(request.getTypeSoin());
             repository.save(creneauUpdate);
-            return  mapper.toDTO(creneauUpdate);
+            return  mapper.toResponse(creneauUpdate);
         }
         return null;
     }
     public List<CreneauResponseDTO> findDisponibles(){
-        return repository.findByDisponibleTrue().stream().map(dispo->mapper.toDTO(dispo)).toList();
+        return repository.findByDisponibleTrue().stream().map(dispo->mapper.toResponse(dispo)).toList();
     }
     @Transactional
     public CreneauResponseDTO reserver(
@@ -97,7 +97,7 @@ public class CreneauService  {
         rdv.setResumeChatbot(resumeChatbot);
         rendezVousRepository.save(rdv);
 
-        creneau.setDisponible(false);
+        creneau.setDisponible(true);
         repository.save(creneau);
 
         return mapper.toResponse(creneau);
@@ -109,7 +109,7 @@ public class CreneauService  {
             Creneau creneauUpdate = creneau.get();
             creneauUpdate.setDisponible(true);
             repository.save(creneauUpdate);
-            return  mapper.toDTO(creneauUpdate);
+            return  mapper.toResponse(creneauUpdate);
         }
         return null;
 

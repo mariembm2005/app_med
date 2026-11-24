@@ -1,9 +1,15 @@
 package com.example.app_medical.service;
 
 import com.example.app_medical.dto.ChatMessageDTO;
+import com.example.app_medical.dto.ChatRequestDTO;
 import com.example.app_medical.dto.ChatResponseDTO;
+import com.example.app_medical.entity.Patient;
+import com.example.app_medical.entity.RendezVous;
 import com.example.app_medical.entity.Specialite;
+import com.example.app_medical.repository.PatientRepository;
+import com.example.app_medical.repository.RendezVousRepository;
 import com.example.app_medical.repository.SpecialiteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +32,8 @@ public class ChatbotService {
     private static final String URL = "https://api.groq.com/openai/v1/chat/completions";
 
     private final SpecialiteRepository specialiteRepo;
+    private final RendezVousRepository rendezVousRepository;
+    private final PatientRepository patientRepository;
     private final ObjectMapper mapper = new ObjectMapper();
     private final RestTemplate restTemplate;
 
@@ -35,12 +43,70 @@ public class ChatbotService {
     @Value("${groq.model}")
     private String model;
 
-    public ChatbotService(SpecialiteRepository specialiteRepo) {
+    public ChatbotService(SpecialiteRepository specialiteRepo,RendezVousRepository rendezVousRepository,PatientRepository patientRepository) {
         this.specialiteRepo = specialiteRepo;
+        this.rendezVousRepository = rendezVousRepository;
+        this.patientRepository = patientRepository;
         SimpleClientHttpRequestFactory f = new SimpleClientHttpRequestFactory();
         f.setConnectTimeout(5000);
         f.setReadTimeout(20000);
         this.restTemplate = new RestTemplate(f);
+    }
+    @Transactional
+    public ChatResponseDTO repondreEtEnregistrer(
+            ChatRequestDTO request
+    ) {
+        if (request.patientId() == null) {
+            throw new IllegalArgumentException(
+                    "L'identifiant du patient est obligatoire."
+            );
+        }
+
+        if (request.rendezVousId() == null) {
+            throw new IllegalArgumentException(
+                    "L'identifiant du rendez-vous est obligatoire."
+            );
+        }
+
+        Patient patient = patientRepository
+                .findById(request.patientId())
+                .orElseThrow(() -> new RuntimeException(
+                        "Patient introuvable avec l'id : "
+                                + request.patientId()
+                ));
+
+        RendezVous rendezVous = rendezVousRepository
+                .findById(request.rendezVousId())
+                .orElseThrow(() -> new RuntimeException(
+                        "Rendez-vous introuvable avec l'id : "
+                                + request.rendezVousId()
+                ));
+
+
+        if (rendezVous.getPatient() == null ||
+                !rendezVous.getPatient().getId()
+                        .equals(patient.getId())) {
+
+            throw new IllegalArgumentException(
+                    "Ce rendez-vous n'appartient pas au patient indiqué."
+            );
+        }
+
+
+        ChatResponseDTO response =
+                repondre(request.historique());
+
+
+        if (response.termine() &&
+                response.resume() != null &&
+                !response.resume().isBlank()) {
+
+            rendezVous.setResumeChatbot(response.resume());
+
+            rendezVousRepository.save(rendezVous);
+        }
+
+        return response;
     }
 
     public ChatResponseDTO repondre(List<ChatMessageDTO> historique) {
@@ -68,7 +134,7 @@ public class ChatbotService {
             boolean estTermine = r.termine() && !valides.isEmpty();
 
             String resume = null;
-            if (estTermine && r.resume() != null && !r.resume().isBlank()) {
+            if (r.resume() != null && !r.resume().isBlank()) {
                 resume = r.resume().trim();
             }
 

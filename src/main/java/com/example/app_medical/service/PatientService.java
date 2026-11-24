@@ -17,8 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -57,7 +56,7 @@ public class PatientService {
         return creneauRepository
                 .findByPlageHoraireMedecinId(medecinId)
                 .stream()
-                .map(creneauMapper::toDTO)
+                .map(creneauMapper::toResponse)
                 .toList();
     }
     @Transactional
@@ -82,13 +81,17 @@ public class PatientService {
         rendezVous.setCreneau(creneau);
         rendezVous.setPatient(patient);
         rendezVous.setDateReservation(LocalDate.now());
-        rendezVous.setConfirme(true);
+        rendezVous.setConfirme(false);
 
         RendezVous saved = rendezVousRepository.save(rendezVous);
 
-        creneau.setDisponible(false);
+        creneau.setDisponible(true);
         creneauRepository.save(creneau);
 
         return rendezVousMapper.toDTO(saved);
+    }
+    public PatientResponseDTO getById(Long id){
+        Patient p = patientRepository.getReferenceById(id);
+        return patientMapper.toPatientResponse(p);
     }
 }

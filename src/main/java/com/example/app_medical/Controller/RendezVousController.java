@@ -29,15 +29,20 @@ public class RendezVousController {
     private final CreneauRepository creneauRepository;
     private final PatientRepository patientRepository;
     private final RendezVousMapper rendezVousMapper;
+    private final PatientService patientService;
 
     @PostMapping
     public ResponseEntity<RendezVousResponseDTO> create(
             @RequestBody RendezVousRequestDTO dto) {
 
         return ResponseEntity.ok(
-                rendezVousService.create(dto));
+                patientService.reserver(dto));
     }
+    @GetMapping
+    public ResponseEntity<List<RendezVousResponseDTO>> getAll(){
+        return ResponseEntity.ok(rendezVousService.getAll());
 
+    }
     @GetMapping("/patient")
     public ResponseEntity<List<RendezVousResponseDTO>> getMesRendezVous(Authentication authentication) {
         if (authentication == null) {
