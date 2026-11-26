@@ -17,6 +17,6 @@ public class ChatbotController {
 
     @PostMapping("/message")
     public ChatResponseDTO message(@RequestBody ChatRequestDTO req) {
-        return service.repondreEtEnregistrer(req);
+        return service.repondre(req.historique());
     }
 }
