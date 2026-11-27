@@ -30,6 +30,8 @@ public class RendezVous {
     @OneToOne
     @JoinColumn(name = "creneau_id", nullable = true)
     private Creneau creneau;
+    @Column(nullable = false)
+    private boolean refuse = false;
 
     public boolean estConfirmé(){
         return confirme;

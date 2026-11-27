@@ -186,12 +186,12 @@ GET localhost:8081/api/creneaux
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk1NDYxNzYyLCJleHAiOjE3OTU0NjM1NjJ9.RU2oizCQy8OSfgWtgsxe3LSJK7GB0JqWVZdQxq0JYbY
 ###
 POST localhost:8081/api/rendezvous
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWFAbS5jb20iLCJyb2xlIjoiTUVERUNJTiIsImlhdCI6MTc5NTUzOTg4MywiZXhwIjoxNzk1NTQxNjgzfQ.wwRlFz1xqrWVE8AW-nh4MfIUxnSRgvqAnG8-blXh5XY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpZW1iZW5tYW5zb3VyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzk1Nzk3MzAyLCJleHAiOjE3OTU3OTkxMDJ9.gqqH-pd23NnE7itQ5sNnMIdOQbOr2OtNVqsunQ3cYNI
 Content-Type: application/json
 
 {
   "patientId": 51,
-  "creneauId": 164
+  "creneauId": 171
 }
 ###
 GET localhost:8081/api/rendezvous/12

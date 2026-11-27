@@ -46,6 +46,7 @@ public class RendezVousService {
             rdv.getCreneau().setDisponible(true);
 
             rdv.setConfirme(false);
+            rdv.setRefuse(true);
             return rendezVousRepository.save(rdv);
         }
         return null;

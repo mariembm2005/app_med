@@ -37,6 +37,7 @@ public class RendezVousMapper {
         dto.setDateReservation(rdv.getDateReservation());
         dto.setConfirme(rdv.isConfirme());
         dto.setResumeChatbot(rdv.getResumeChatbot());
+        dto.setRefuse(rdv.isRefuse());
 
         if (rdv.getPatient() != null) {
             Patient patient = rdv.getPatient();

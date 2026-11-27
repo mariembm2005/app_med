@@ -29,4 +29,5 @@ public class RendezVousResponseDTO {
     private String heureCreneau;
     private String nomMedecin;
     private String prenomMedecin;
+    private boolean refuse;
 }
