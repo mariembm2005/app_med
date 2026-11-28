@@ -47,6 +47,7 @@ public class RendezVousMapper {
             dto.setPatientTelephone(patient.getTelephone());
         }
 
+
         if (rdv.getCreneau() != null) {
             Creneau creneau = rdv.getCreneau();
             dto.setCreneauId(creneau.getId());
@@ -57,6 +58,7 @@ public class RendezVousMapper {
                 dto.setHeureCreneau(creneau.getHeureDebut().toString());
             }
 
+
             if (creneau.getPlageHoraire() != null) {
                 PlageHoraire plage = creneau.getPlageHoraire();
                 dto.setDateCreneau(plage.getDate());
@@ -65,6 +67,10 @@ public class RendezVousMapper {
                     Medecin medecin = plage.getMedecin();
                     dto.setNomMedecin(medecin.getNom());
                     dto.setPrenomMedecin(medecin.getPrenom());
+                    dto.setCabinet(medecin.getAdresse());
+                    if (medecin.getSpecialite() != null) {
+                        dto.setSpecialite(medecin.getSpecialite().getNom());
+                    }
                 }
             }
         }

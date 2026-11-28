@@ -30,4 +30,6 @@ public class RendezVousResponseDTO {
     private String nomMedecin;
     private String prenomMedecin;
     private boolean refuse;
+    private String specialite;
+    private String cabinet;
 }
